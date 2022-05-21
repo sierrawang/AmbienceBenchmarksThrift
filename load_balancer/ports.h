@@ -1,0 +1,3 @@
+#define LB_PORT 9090
+#define USERDB_PORT 9091
+#define TWEETDB_PORT 9092

@@ -112,7 +112,7 @@ class WorkerHandler : public workerIf {
 
         for (auto& followee : user_followees) {
             std::vector<Tweet> followee_tweets;
-            tweet_db_client.get_user_tweets(followee_tweets, username);
+            tweet_db_client.get_user_tweets(followee_tweets, followee);
             followee_post_histories.push_back(followee_tweets);
         }
 

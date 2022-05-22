@@ -37,7 +37,7 @@ class TweetDbHandler : public tweet_dbIf {
     // TO DO - figure out if I need to syncronize this
     bool post_tweet(const std::string& username, const std::string& tweet) override {
         std::string u = std::string(username);
-        std::cout << "tweet_db:\t post_tweet(), " << username << " " << tweet;
+        std::cout << "tweet_db:\t post_tweet(), " << username << " " << tweet << std::endl;
 
         Tweet t;
         t.username = u;

@@ -187,7 +187,7 @@ int main() {
         std::make_shared<apache::thrift::transport::TBufferedTransportFactory>(),
         std::make_shared<apache::thrift::protocol::TBinaryProtocolFactory>());
 
-    std::cout << "Starting user_db\n" << std::endl;
+    std::cout << "Starting user_db on port " << USERDB_PORT << std::endl;
     server.serve();
     return 0;
 }

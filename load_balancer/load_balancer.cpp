@@ -220,7 +220,7 @@ class LoadBalancerHandler : public workerIf {
 
     private:
     int next_worker = 0;
-    int num_workers = 2;
+    int num_workers = 8;
 };
 
 class LoadBalancerCloneFactory : virtual public workerIfFactory {

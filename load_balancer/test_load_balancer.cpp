@@ -57,7 +57,7 @@ int main() {
     auto bob_it2 = bob_followees.begin();
     while (bob_it2 != bob_followees.end()) {
         auto& followee = *bob_it2;
-        std::cout << "TEST:\t Bob is followees " << " " << followee << std::endl;
+        std::cout << "TEST:\t Bob is following " << followee << std::endl;
         bob_it2++;
     }
     printf("TEST:\t Bob should be following Alice and Carol\n");
@@ -70,7 +70,7 @@ int main() {
     auto bob_it = bob_feed.begin();
     while (bob_it != bob_feed.end()) {
         auto& tweet = *bob_it;
-        std::cout << "TEST:\t @" << tweet.id << " " << tweet.timestamp;
+        std::cout << "TEST:\t @" << tweet.id << " " << tweet.timestamp << " ";
         std::cout << tweet.username << ":" << tweet.content << std::endl;
         bob_it++;
         bob_i++;
@@ -86,7 +86,7 @@ int main() {
     auto alice_it = alice_feed.begin();
     while (alice_it != alice_feed.end()) {
         auto& tweet = *alice_it;
-        std::cout << "TEST:\t @" << tweet.id << " " << tweet.timestamp;
+        std::cout << "TEST:\t @" << tweet.id << " " << tweet.timestamp << " ";
         std::cout << tweet.username << ":" << tweet.content << std::endl;
         alice_it++;
         alice_i++;
@@ -105,7 +105,7 @@ int main() {
     bob_it2 = bob_followees2.begin();
     while (bob_it2 != bob_followees2.end()) {
         auto& followee = *bob_it2;
-        std::cout << "TEST:\t Bob is followees " << followee << std::endl;
+        std::cout << "TEST:\t Bob is following " << followee << std::endl;
         bob_it2++;
     }
     printf("TEST:\t Bob should be following Carol\n");
@@ -118,7 +118,7 @@ int main() {
     bob_it = bob_feed2.begin();
     while (bob_it != bob_feed2.end()) {
         auto& tweet = *bob_it;
-        std::cout << "TEST:\t @" << tweet.id << " " << tweet.timestamp;
+        std::cout << "TEST:\t @" << tweet.id << " " << tweet.timestamp << " ";
         std::cout << tweet.username << ":" << tweet.content << std::endl;
         bob_it++;
         bob_i++;
@@ -139,7 +139,7 @@ int main() {
     bob_it2 = bob_followees3.begin();
     while (bob_it2 != bob_followees3.end()) {
         auto& followee = *bob_it2;
-        std::cout << "TEST:\t Bob is followees " << followee << std::endl;
+        std::cout << "TEST:\t Bob is following " << followee << std::endl;
         bob_it2++;
     }
     printf("TEST:\t Bob should be following nobody\n");
@@ -152,13 +152,13 @@ int main() {
     bob_it = bob_feed3.begin();
     while (bob_it != bob_feed3.end()) {
         auto& tweet = *bob_it;
-        std::cout << "TEST:\t @" << tweet.id << " " << tweet.timestamp;
+        std::cout << "TEST:\t @" << tweet.id << " " << tweet.timestamp << " ";
         std::cout << tweet.username << ":" << tweet.content << std::endl;
         bob_it++;
         bob_i++;
     }
     std::cout << "TEST:\t Sanity check - there should be 0 total tweets. There were ";
-    std::cout << bob_i << " == " << bob_feed2.size() << std::endl;
+    std::cout << bob_i << " == " << bob_feed3.size() << std::endl;
 
     // // Get Bob's tweets
     printf("TEST:\t Checking Bob's Tweets\n");
@@ -168,12 +168,13 @@ int main() {
     bob_it = bob_tweets.begin();
     while (bob_it != bob_tweets.end()) {
         auto& tweet = *bob_it;
-        std::cout << "TEST:\t" << bob_i << " " << tweet.username << " tweeted: " << tweet.content << std::endl;
+        std::cout << "TEST:\t @" << tweet.id << " " << tweet.timestamp << " ";
+        std::cout << tweet.username << ":" << tweet.content << std::endl;
         bob_it++;
         bob_i++;
     }
     std::cout << "TEST:\t Sanity check - there should be 1 total tweets. There were ";
-    std::cout << bob_i << " == " << bob_feed2.size() << std::endl;
+    std::cout << bob_i << " == " << bob_tweets.size() << std::endl;
 
 
     transport->close();

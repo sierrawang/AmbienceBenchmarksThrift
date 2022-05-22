@@ -32,3 +32,8 @@ add_executable(tweet_db tweet_db.cpp)
 target_link_libraries(tweet_db PUBLIC thrift::thrift)
 target_link_libraries(tweet_db PRIVATE Threads::Threads)
 target_link_libraries(tweet_db PRIVATE load_balancergencpp)
+
+add_executable(worker worker.cpp)
+target_link_libraries(worker PUBLIC thrift::thrift)
+target_link_libraries(worker PRIVATE Threads::Threads)
+target_link_libraries(worker PRIVATE load_balancergencpp)

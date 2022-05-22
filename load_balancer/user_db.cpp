@@ -43,11 +43,12 @@ class UserDbHandler : public user_dbIf {
 
         auto search = users.find(u);
         if (search == users.end()) {
-            User new_user;
+            User new_user{};
             new_user.username = u;
             users.emplace(u, new_user);
             return true;
         }
+        std::cout << "user_db:\t idk why we would be out here" << std::endl;
 
         return false;
     }
@@ -162,16 +163,21 @@ class UserDbHandler : public user_dbIf {
 
 class UserDbCloneFactory : virtual public user_dbIfFactory {
     public:
+    UserDbCloneFactory() {
+        handler = new UserDbHandler;
+    }
     ~UserDbCloneFactory() override = default;
 
     user_dbIf* getHandler(const ::apache::thrift::TConnectionInfo& connInfo) override {
         std::dynamic_pointer_cast<apache::thrift::transport::TSocket>(connInfo.transport);
-        return new UserDbHandler;
+        return handler;
     }
 
     void releaseHandler(user_dbIf* handler) override {
-        delete handler;
+        // delete handler;
     }
+
+    user_dbIf* handler;
 };
 
 int main() {

@@ -37,3 +37,8 @@ add_executable(worker worker.cpp)
 target_link_libraries(worker PUBLIC thrift::thrift)
 target_link_libraries(worker PRIVATE Threads::Threads)
 target_link_libraries(worker PRIVATE load_balancergencpp)
+
+add_executable(test_load_balancer test_load_balancer.cpp)
+target_link_libraries(test_load_balancer PUBLIC thrift::thrift)
+target_link_libraries(test_load_balancer PRIVATE Threads::Threads)
+target_link_libraries(test_load_balancer PRIVATE load_balancergencpp)

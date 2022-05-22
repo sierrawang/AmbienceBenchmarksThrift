@@ -220,22 +220,28 @@ class LoadBalancerHandler : public workerIf {
 
     private:
     int next_worker = 0;
-    int num_workers = 8;
+    int num_workers = 2;
 };
 
 class LoadBalancerCloneFactory : virtual public workerIfFactory {
     public:
+    LoadBalancerCloneFactory() {
+        handler = new LoadBalancerHandler;
+    }
+    
     ~LoadBalancerCloneFactory() override  = default;
 
     virtual workerIf* getHandler(const ::apache::thrift::TConnectionInfo& connInfo) override {
         std::shared_ptr<apache::thrift::transport::TSocket> sock =
             std::dynamic_pointer_cast<apache::thrift::transport::TSocket>(connInfo.transport);
-            return new LoadBalancerHandler;
+            return handler;
     }
 
     virtual void releaseHandler(workerIf* handler) override {
-        delete handler;
+        // delete handler;
     }
+
+    workerIf* handler;
 };
 
 int main() {

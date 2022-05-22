@@ -252,17 +252,23 @@ class WorkerHandler : public workerIf {
 
 class WorkerCloneFactory : virtual public workerIfFactory {
     public:
+    WorkerCloneFactory() {
+        handler = new WorkerHandler;
+    }
+    
     ~WorkerCloneFactory() override  = default;
 
     virtual workerIf* getHandler(const ::apache::thrift::TConnectionInfo& connInfo) override {
         std::shared_ptr<apache::thrift::transport::TSocket> sock =
             std::dynamic_pointer_cast<apache::thrift::transport::TSocket>(connInfo.transport);
-            return new WorkerHandler;
+            return handler;
     }
 
     virtual void releaseHandler(workerIf* handler) override {
-        delete handler;
+        // delete handler;
     }
+
+    workerIf* handler;
 };
 
 int main(int argc, char **argv) {

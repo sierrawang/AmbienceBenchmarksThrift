@@ -76,18 +76,23 @@ class TweetDbHandler : public tweet_dbIf {
 
 class TweetDbCloneFactory : virtual public tweet_dbIfFactory {
     public:
+    TweetDbCloneFactory() {
+        handler = new TweetDbHandler;
+    }
     ~TweetDbCloneFactory() override = default;
 
     tweet_dbIf* getHandler(const ::apache::thrift::TConnectionInfo& connInfo) override {
         std::shared_ptr<apache::thrift::transport::TSocket> sock =
             std::dynamic_pointer_cast<apache::thrift::transport::TSocket>(connInfo.transport);
-        return new TweetDbHandler;
+        return handler;
     
     }
 
     void releaseHandler(tweet_dbIf* handler) override {
-        delete handler;
+        // delete handler;
     }
+
+    tweet_dbIf* handler;
 };
 
 int main() {

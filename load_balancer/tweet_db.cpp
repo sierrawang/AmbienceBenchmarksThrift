@@ -35,7 +35,7 @@ class TweetDbHandler : public tweet_dbIf {
     }
 
     // TO DO - figure out if I need to syncronize this
-    bool post_tweet(const std::string& username, const std::string& tweet) override {
+    void post_tweet(Tweet& _return, const std::string& username, const std::string& tweet) override {
         std::string u = std::string(username);
         std::cout << "tweet_db:\t post_tweet(), " << username << " " << tweet << std::endl;
 
@@ -54,7 +54,7 @@ class TweetDbHandler : public tweet_dbIf {
             tweets.emplace(u, std::vector<Tweet>{t});
         }
 
-        return true;
+        _return  = t;
     }
 
     void get_user_tweets(std::vector<Tweet> & _return, const std::string& username) override {

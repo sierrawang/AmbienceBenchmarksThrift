@@ -40,7 +40,7 @@ service worker {
 
 service tweet_db {
     bool delete_user(1: string username),
-    bool post_tweet(1: string username, 2: string tweet),
+    Tweet post_tweet(1: string username, 2: string tweet),
     list<Tweet> get_user_tweets(1: string username),
 }
 

@@ -39,7 +39,7 @@ class LoadBalancerHandler : public workerIf {
         } catch (std::exception& tx) {
             std::cout << "post_tweet error: " << tx.what() << std::endl;
         }
-        return false;
+        return res;
     }
     
     void get_user_tweets(std::vector<Tweet> & _return, const std::string& username) override {
@@ -220,7 +220,7 @@ class LoadBalancerHandler : public workerIf {
 
     private:
     int next_worker = 0;
-    int num_workers = 8;
+    int num_workers = 3;
 };
 
 class LoadBalancerCloneFactory : virtual public workerIfFactory {

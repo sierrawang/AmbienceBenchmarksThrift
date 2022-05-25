@@ -7,6 +7,7 @@
 #include "../gen-cpp/worker.h"
 #include "../gen-cpp/tweet_db.h"
 #include "../gen-cpp/user_db.h"
+#include "../gen-cpp/read_endpoint.h"
 #include "ports.h"
 #include <iostream>
 #include <queue>
@@ -42,23 +43,53 @@ class WorkerHandler : public workerIf {
     bool post_tweet(const std::string& username, const std::string& tweet) override {
         std::cout << "worker:\t post_tweet()" << std::endl;
 
-        std::shared_ptr<apache::thrift::transport::TTransport> socket(
+        std::shared_ptr<apache::thrift::transport::TTransport> tweet_db_socket(
             new apache::thrift::transport::TSocket("localhost", TWEETDB_PORT));
-        std::shared_ptr<apache::thrift::transport::TTransport> transport(
-            new apache::thrift::transport::TBufferedTransport(socket));
-        std::shared_ptr<apache::thrift::protocol::TProtocol> protocol(
-            new apache::thrift::protocol::TBinaryProtocol(transport));
-        tweet_dbClient client(protocol);
+        std::shared_ptr<apache::thrift::transport::TTransport> tweet_db_transport(
+            new apache::thrift::transport::TBufferedTransport(tweet_db_socket));
+        std::shared_ptr<apache::thrift::protocol::TProtocol> tweet_db_protocol(
+            new apache::thrift::protocol::TBinaryProtocol(tweet_db_transport));
+        tweet_dbClient tweet_db_client(tweet_db_protocol);
 
-        bool res = false;
+        std::shared_ptr<apache::thrift::transport::TTransport> user_db_socket(
+            new apache::thrift::transport::TSocket("localhost", USERDB_PORT));
+        std::shared_ptr<apache::thrift::transport::TTransport> user_db_transport(
+            new apache::thrift::transport::TBufferedTransport(user_db_socket));
+        std::shared_ptr<apache::thrift::protocol::TProtocol> user_db_protocol(
+            new apache::thrift::protocol::TBinaryProtocol(user_db_transport));
+        user_dbClient user_db_client(user_db_protocol);
+
+        std::shared_ptr<apache::thrift::transport::TTransport> read_endpoint_socket(
+            new apache::thrift::transport::TSocket("localhost", READ_ENDPT_PORT));
+        std::shared_ptr<apache::thrift::transport::TTransport> read_endpoint_transport(
+            new apache::thrift::transport::TBufferedTransport(read_endpoint_socket));
+        std::shared_ptr<apache::thrift::protocol::TProtocol> read_endpoint_protocol(
+            new apache::thrift::protocol::TBinaryProtocol(read_endpoint_transport));
+        read_endpointClient read_endpoint_client(read_endpoint_protocol);
+
         try {
-            transport->open();
-            res = client.post_tweet(username, tweet);
-            transport->close();
+            tweet_db_transport->open();
+            Tweet t;
+            tweet_db_client.post_tweet(t, username, tweet);
+            tweet_db_transport->close();
+
+            // Determine whose feeds need to be updated
+            user_db_transport->open();
+            User user_info;
+            user_db_client.get_user(user_info, username);
+            user_db_transport->close();
+
+            // Write the output to the read client
+            read_endpoint_transport->open();
+            for (auto& f : user_info.followers) {
+                read_endpoint_client.update_feed(f, t);
+            }
+            read_endpoint_transport->close();
+            return true;
         } catch (std::exception& tx) {
             std::cout << "post_tweet error: " << tx.what() << std::endl;
+            return false;
         }
-        return res;
     }
     
     void get_user_tweets(std::vector<Tweet> & _return, const std::string& username) override {

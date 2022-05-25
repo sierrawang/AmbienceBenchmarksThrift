@@ -20,7 +20,6 @@ add_library(pollgencpp STATIC ${pollgencpp_SOURCES})
 add_executable(poll poll.cpp)
 target_link_libraries(poll PUBLIC thrift::thrift)
 target_link_libraries(poll PRIVATE Threads::Threads)
-
 target_link_libraries(pollgencpp PUBLIC thrift::thrift)
 target_link_libraries(poll PUBLIC pollgencpp)
 

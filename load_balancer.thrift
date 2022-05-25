@@ -17,6 +17,15 @@ service endpoint {
     bool start()
 }
 
+service write_endpoint {
+    bool start()
+}
+
+service read_endpoint {
+    bool update_feed(1: string username, 2: Tweet tweet),
+    list<Tweet> get_feed(1: string username)
+}
+
 service worker {
     bool post_tweet(1: string username, 2: string tweet),
     list<Tweet> get_user_tweets(1: string username),

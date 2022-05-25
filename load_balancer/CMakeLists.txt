@@ -11,6 +11,8 @@ find_package(Threads REQUIRED)
 set(load_balancergencpp_SOURCES
     /home/sierra/benchmarks/gen-cpp/load_balancer_types.cpp
     /home/sierra/benchmarks/gen-cpp/endpoint.cpp
+    /home/sierra/benchmarks/gen-cpp/read_endpoint.cpp
+    /home/sierra/benchmarks/gen-cpp/write_endpoint.cpp
     /home/sierra/benchmarks/gen-cpp/tweet_db.cpp
     /home/sierra/benchmarks/gen-cpp/user_db.cpp
     /home/sierra/benchmarks/gen-cpp/worker.cpp
@@ -42,3 +44,13 @@ add_executable(test_load_balancer test_load_balancer.cpp)
 target_link_libraries(test_load_balancer PUBLIC thrift::thrift)
 target_link_libraries(test_load_balancer PRIVATE Threads::Threads)
 target_link_libraries(test_load_balancer PRIVATE load_balancergencpp)
+
+add_executable(read_endpoint read_endpoint.cpp)
+target_link_libraries(read_endpoint PUBLIC thrift::thrift)
+target_link_libraries(read_endpoint PRIVATE Threads::Threads)
+target_link_libraries(read_endpoint PRIVATE load_balancergencpp)
+
+add_executable(write_endpoint write_endpoint.cpp)
+target_link_libraries(write_endpoint PUBLIC thrift::thrift)
+target_link_libraries(write_endpoint PRIVATE Threads::Threads)
+target_link_libraries(write_endpoint PRIVATE load_balancergencpp)

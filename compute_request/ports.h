@@ -1,0 +1,7 @@
+#define UI_PORT 9089
+#define CLIENT_PORT 9091
+#define PROVIDER_PORT 9092
+#define RDB_PORT 9093
+#define UVER_PORT 9094
+#define TVER_PORT 9095
+#define PRICE_PORT 9096

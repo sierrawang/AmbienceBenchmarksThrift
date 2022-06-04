@@ -67,6 +67,7 @@ int main() {
         std::make_shared<TBufferedTransportFactory>(),
         std::make_shared<TBinaryProtocolFactory>());
 
+    std::cout << "Starting poll server\n";
     server.serve();
     return 0;
 }

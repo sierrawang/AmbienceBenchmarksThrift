@@ -37,7 +37,7 @@ class agentHandler : public agentIf {
     agentHandler() = default;
 
     void start(bench_result& _return, const int64_t param) override {
-        std::shared_ptr<TTransport> socket(new TSocket("0.0.0.0", POLL_PORT));
+        std::shared_ptr<TTransport> socket(new TSocket("thrift_con", POLL_PORT));
         std::shared_ptr<TTransport> transport(new TBufferedTransport(socket));
         std::shared_ptr<TProtocol> protocol(new TBinaryProtocol(transport));
         pollClient client(protocol);

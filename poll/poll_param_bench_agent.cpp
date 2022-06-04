@@ -37,7 +37,7 @@ class agentHandler : public agentIf {
     agentHandler() = default;
 
     void start(bench_result& _return, const int64_t param) override {
-        std::shared_ptr<TTransport> socket(new TSocket("0.0.0.0", POLL_PORT));
+        std::shared_ptr<TTransport> socket(new TSocket("thrift_con", POLL_PORT));
         std::shared_ptr<TTransport> transport(new TBufferedTransport(socket));
         std::shared_ptr<TProtocol> protocol(new TBinaryProtocol(transport));
         pollClient client(protocol);
@@ -68,6 +68,10 @@ class agentHandler : public agentIf {
         transport->open();
         begin = duration_cast<microseconds>(system_clock::now().time_since_epoch()).count();
         for (i = 0; i < num_iterations; i++) {
+		if (i % 100 == 0) {
+			cout << "iteration: " << i << end;
+		}
+
             // Call another service that simply returns a timestamp
             before = duration_cast<microseconds>(system_clock::now().time_since_epoch()).count();
             stamp = client.fn_with_param(data);

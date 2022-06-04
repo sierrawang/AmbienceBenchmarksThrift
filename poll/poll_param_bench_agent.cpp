@@ -69,7 +69,7 @@ class agentHandler : public agentIf {
         begin = duration_cast<microseconds>(system_clock::now().time_since_epoch()).count();
         for (i = 0; i < num_iterations; i++) {
 		if (i % 100 == 0) {
-			cout << "iteration: " << i << end;
+			cout << "iteration: " << i << endl;
 		}
 
             // Call another service that simply returns a timestamp

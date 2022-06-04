@@ -37,12 +37,13 @@ class agentHandler : public agentIf {
     agentHandler() = default;
 
     void start(bench_result& _return, const int64_t param) override {
-        std::shared_ptr<TTransport> socket(new TSocket("localhost", POLL_PORT));
+        std::shared_ptr<TTransport> socket(new TSocket("0.0.0.0", POLL_PORT));
         std::shared_ptr<TTransport> transport(new TBufferedTransport(socket));
         std::shared_ptr<TProtocol> protocol(new TBinaryProtocol(transport));
         pollClient client(protocol);
 
-        cout << "Poll bench agent, num_iterations: " << param << endl;
+	auto num_iterations = 100000;
+        cout << "Poll bench agent, size: " << param << endl;
         
         auto i = 0;
         uint64_t begin = 0;
@@ -59,12 +60,14 @@ class agentHandler : public agentIf {
         uint64_t return_sum = 0;
         uint64_t return_sq_sum = 0;
 
-        std::vector<int64_t> data(1024);
+        std::vector<int64_t> data(param);
         cout << "data.size:" << data.size() << endl;
+
+	cout << "Running iterations: " << num_iterations << endl;
 
         transport->open();
         begin = duration_cast<microseconds>(system_clock::now().time_since_epoch()).count();
-        for (i = 0; i < param; i++) {
+        for (i = 0; i < num_iterations; i++) {
             // Call another service that simply returns a timestamp
             before = duration_cast<microseconds>(system_clock::now().time_since_epoch()).count();
             stamp = client.fn_with_param(data);
@@ -115,6 +118,7 @@ int main() {
         std::make_shared<TBufferedTransportFactory>(),
         std::make_shared<TBinaryProtocolFactory>());
 
+    std::cout << "Starting poll param bench agent server\n";
     server.serve();
     return 0;
 }

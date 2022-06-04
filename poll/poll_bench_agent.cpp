@@ -37,7 +37,7 @@ class agentHandler : public agentIf {
     agentHandler() = default;
 
     void start(bench_result& _return, const int64_t param) override {
-        std::shared_ptr<TTransport> socket(new TSocket("localhost", POLL_PORT));
+        std::shared_ptr<TTransport> socket(new TSocket("0.0.0.0", POLL_PORT));
         std::shared_ptr<TTransport> transport(new TBufferedTransport(socket));
         std::shared_ptr<TProtocol> protocol(new TBinaryProtocol(transport));
         pollClient client(protocol);
@@ -112,6 +112,7 @@ int main() {
         std::make_shared<TBufferedTransportFactory>(),
         std::make_shared<TBinaryProtocolFactory>());
 
+    std::cout << "Starting poll bench agent server\n";
     server.serve();
     return 0;
 }

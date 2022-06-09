@@ -18,5 +18,8 @@ write_endpoint: write_endpoint.cpp
 read_endpoint: read_endpoint.cpp
 	g++ ../gen-cpp/read_endpoint.cpp ../gen-cpp/load_balancer_types.cpp read_endpoint.cpp -o read_endpoint -lthrift
 
+test_load_balancer: test_load_balancer.cpp
+	g++ ../gen-cpp/write_endpoint.cpp ../gen-cpp/load_balancer_types.cpp ../gen-cpp/read_endpoint.cpp test_load_balancer.cpp -o test_load_balancer -lthrift
+
 clean:
 	rm load_balancer tweet_db user_db worker write_endpoint read_endpoint

@@ -22,4 +22,4 @@ test_load_balancer: test_load_balancer.cpp
 	g++ ../gen-cpp/write_endpoint.cpp ../gen-cpp/load_balancer_types.cpp ../gen-cpp/read_endpoint.cpp test_load_balancer.cpp -o test_load_balancer -lthrift
 
 clean:
-	rm load_balancer tweet_db user_db worker write_endpoint read_endpoint
+	rm test_load_balancer load_balancer tweet_db user_db worker write_endpoint read_endpoint

@@ -36,26 +36,26 @@ int main() {
 
     write_endpointclient.start();
 
-    std::vector<Tweet> bob_res;
-    read_endpointclient.get_feed(bob_res, "Bob");
-    std::vector<Tweet> alice_res;
-    read_endpointclient.get_feed(alice_res, "Alice");
-    std::vector<Tweet> carol_res;
-    read_endpointclient.get_feed(carol_res, "Carol");
-    std::cout << "Bob's feed:" << std::endl;
-    for (auto& tweet : bob_res) {
-        std::cout << tweet << std::endl;
-    }
+    // std::vector<Tweet> bob_res;
+    // read_endpointclient.get_feed(bob_res, "Bob");
+    // std::vector<Tweet> alice_res;
+    // read_endpointclient.get_feed(alice_res, "Alice");
+    // std::vector<Tweet> carol_res;
+    // read_endpointclient.get_feed(carol_res, "Carol");
+    // std::cout << "Bob's feed:" << std::endl;
+    // for (auto& tweet : bob_res) {
+    //     std::cout << tweet << std::endl;
+    // }
 
-    std::cout << "Alice's feed:" << std::endl;
-    for (auto& tweet : alice_res) {
-        std::cout << tweet << std::endl;
-    }
+    // std::cout << "Alice's feed:" << std::endl;
+    // for (auto& tweet : alice_res) {
+    //     std::cout << tweet << std::endl;
+    // }
 
-    std::cout << "Carol's feed:" << std::endl;
-    for (auto& tweet : carol_res) {
-        std::cout << tweet << std::endl;
-    }
+    // std::cout << "Carol's feed:" << std::endl;
+    // for (auto& tweet : carol_res) {
+    //     std::cout << tweet << std::endl;
+    // }
 
 
     wetransport->close();

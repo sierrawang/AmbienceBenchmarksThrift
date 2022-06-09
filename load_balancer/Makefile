@@ -1,4 +1,4 @@
-all: load_balancer tweet_db user_db worker write_endpoint read_endpoint
+all: load_balancer tweet_db user_db worker write_endpoint read_endpoint test_load_balancer
 
 load_balancer: load_balancer.cpp
 	g++ ../gen-cpp/worker.cpp ../gen-cpp/load_balancer_types.cpp load_balancer.cpp -o load_balancer -lthrift

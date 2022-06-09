@@ -86,11 +86,11 @@ public:
 
   bool post_tweet(const std::string &username,
                   const std::string &tweet) override {
-    std::cout << "worker:\t post_tweet() a " << username << " " << tweet << " "
-              << duration_cast<microseconds>(
-                     system_clock::now().time_since_epoch())
-                     .count()
-              << std::endl;
+    // std::cout << "worker:\t post_tweet() a " << username << " " << tweet << " "
+    //           << duration_cast<microseconds>(
+    //                  system_clock::now().time_since_epoch())
+    //                  .count()
+    //           << std::endl;
 
     // Post the tweet to the database
     Tweet res;
@@ -104,37 +104,37 @@ public:
       m_read_endpoint->update_feed(f, res);
     }
 
-    std::cout << "worker:\t post_tweet() b " << username << " " << tweet << " "
-              << duration_cast<microseconds>(
-                     system_clock::now().time_since_epoch())
-                     .count()
-              << std::endl;
+    // std::cout << "worker:\t post_tweet() b " << username << " " << tweet << " "
+    //           << duration_cast<microseconds>(
+    //                  system_clock::now().time_since_epoch())
+    //                  .count()
+    //           << std::endl;
     return true;
   }
 
   void get_user_tweets(std::vector<Tweet> &_return,
                        const std::string &username) override {
-    std::cout << "worker:\t get_user_tweets() a " << username << " "
-              << duration_cast<microseconds>(
-                     system_clock::now().time_since_epoch())
-                     .count()
-              << std::endl;
+    // std::cout << "worker:\t get_user_tweets() a " << username << " "
+    //           << duration_cast<microseconds>(
+    //                  system_clock::now().time_since_epoch())
+    //                  .count()
+    //           << std::endl;
 
     m_tweets->get_user_tweets(_return, username);
-    std::cout << "worker:\t get_user_tweets() b " << username << " "
-              << duration_cast<microseconds>(
-                     system_clock::now().time_since_epoch())
-                     .count()
-              << std::endl;
+    // std::cout << "worker:\t get_user_tweets() b " << username << " "
+    //           << duration_cast<microseconds>(
+    //                  system_clock::now().time_since_epoch())
+    //                  .count()
+    //           << std::endl;
   }
 
   void generate_feed(std::vector<Tweet> &_return,
                      const std::string &username) override {
-    std::cout << "worker:\t generate_feed() a " << username << " "
-              << duration_cast<microseconds>(
-                     system_clock::now().time_since_epoch())
-                     .count()
-              << std::endl;
+    // std::cout << "worker:\t generate_feed() a " << username << " "
+    //           << duration_cast<microseconds>(
+    //                  system_clock::now().time_since_epoch())
+    //                  .count()
+    //           << std::endl;
     std::vector<std::vector<Tweet>> followee_post_histories;
 
     // Collect vectors of each of the followee's tweets
@@ -169,87 +169,87 @@ public:
         pq.pop();
       }
     }
-    std::cout << "worker:\t generate_feed() b " << username << " "
-              << duration_cast<microseconds>(
-                     system_clock::now().time_since_epoch())
-                     .count()
-              << std::endl;
+    // std::cout << "worker:\t generate_feed() b " << username << " "
+    //           << duration_cast<microseconds>(
+    //                  system_clock::now().time_since_epoch())
+    //                  .count()
+    //           << std::endl;
   }
 
   bool create_user(const std::string &username) override {
-    std::cout << "worker:\t create_user() a " << username << " "
-              << duration_cast<microseconds>(
-                     system_clock::now().time_since_epoch())
-                     .count()
-              << std::endl;
+    // std::cout << "worker:\t create_user() a " << username << " "
+    //           << duration_cast<microseconds>(
+    //                  system_clock::now().time_since_epoch())
+    //                  .count()
+    //           << std::endl;
     auto res = m_users->create_user(username);
-    std::cout << "worker:\t create_user() b " << username << " "
-              << duration_cast<microseconds>(
-                     system_clock::now().time_since_epoch())
-                     .count()
-              << std::endl;
+    // std::cout << "worker:\t create_user() b " << username << " "
+    //           << duration_cast<microseconds>(
+    //                  system_clock::now().time_since_epoch())
+    //                  .count()
+    //           << std::endl;
     return res;
   }
 
   bool delete_user(const std::string &username) override {
-    std::cout << "worker:\t delete_user() a " << username << " "
-              << duration_cast<microseconds>(
-                     system_clock::now().time_since_epoch())
-                     .count()
-              << std::endl;
+    // std::cout << "worker:\t delete_user() a " << username << " "
+    //           << duration_cast<microseconds>(
+    //                  system_clock::now().time_since_epoch())
+    //                  .count()
+    //           << std::endl;
     auto res = m_users->delete_user(username);
-    std::cout << "worker:\t delete_user() b " << username << " "
-              << duration_cast<microseconds>(
-                     system_clock::now().time_since_epoch())
-                     .count()
-              << std::endl;
+    // std::cout << "worker:\t delete_user() b " << username << " "
+    //           << duration_cast<microseconds>(
+    //                  system_clock::now().time_since_epoch())
+    //                  .count()
+    //           << std::endl;
     return res;
   }
 
   void get_user(User &_return, const std::string &username) override {
-    std::cout << "worker:\t get_user() a " << username << " "
-              << duration_cast<microseconds>(
-                     system_clock::now().time_since_epoch())
-                     .count()
-              << std::endl;
+    // std::cout << "worker:\t get_user() a " << username << " "
+    //           << duration_cast<microseconds>(
+    //                  system_clock::now().time_since_epoch())
+    //                  .count()
+    //           << std::endl;
     User res;
     m_users->get_user(res, username);
-    std::cout << "worker:\t get_user() b " << username << " "
-              << duration_cast<microseconds>(
-                     system_clock::now().time_since_epoch())
-                     .count()
-              << std::endl;
+    // std::cout << "worker:\t get_user() b " << username << " "
+    //           << duration_cast<microseconds>(
+    //                  system_clock::now().time_since_epoch())
+    //                  .count()
+    //           << std::endl;
   }
 
   bool follow(const std::string &follower,
               const std::string &followee) override {
-    std::cout << "worker:\t follow() a " << follower << " " << followee << " "
-              << duration_cast<microseconds>(
-                     system_clock::now().time_since_epoch())
-                     .count()
-              << std::endl;
+    // std::cout << "worker:\t follow() a " << follower << " " << followee << " "
+    //           << duration_cast<microseconds>(
+    //                  system_clock::now().time_since_epoch())
+    //                  .count()
+    //           << std::endl;
     auto res = m_users->follow(follower, followee);
-    std::cout << "worker:\t follow() b " << follower << " " << followee << " "
-              << duration_cast<microseconds>(
-                     system_clock::now().time_since_epoch())
-                     .count()
-              << std::endl;
+    // std::cout << "worker:\t follow() b " << follower << " " << followee << " "
+    //           << duration_cast<microseconds>(
+    //                  system_clock::now().time_since_epoch())
+    //                  .count()
+    //           << std::endl;
     return res;
   }
 
   bool unfollow(const std::string &follower,
                 const std::string &followee) override {
-    std::cout << "worker:\t unfollow() a " << follower << " " << followee << " "
-              << duration_cast<microseconds>(
-                     system_clock::now().time_since_epoch())
-                     .count()
-              << std::endl;
+    // std::cout << "worker:\t unfollow() a " << follower << " " << followee << " "
+    //           << duration_cast<microseconds>(
+    //                  system_clock::now().time_since_epoch())
+    //                  .count()
+    //           << std::endl;
     auto res = m_users->unfollow(follower, followee);
-    std::cout << "worker:\t unfollow() b " << follower << " " << followee << " "
-              << duration_cast<microseconds>(
-                     system_clock::now().time_since_epoch())
-                     .count()
-              << std::endl;
+    // std::cout << "worker:\t unfollow() b " << follower << " " << followee << " "
+    //           << duration_cast<microseconds>(
+    //                  system_clock::now().time_since_epoch())
+    //                  .count()
+    //           << std::endl;
     return res;
   }
 

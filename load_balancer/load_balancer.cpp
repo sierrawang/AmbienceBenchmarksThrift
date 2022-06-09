@@ -43,137 +43,137 @@ public:
 
   bool post_tweet(const std::string &username,
                   const std::string &tweet) override {
-    std::cout << "load_balancer:\t post_tweet() a " << username << " " << tweet
-              << " "
-              << duration_cast<microseconds>(
-                     system_clock::now().time_since_epoch())
-                     .count()
-              << std::endl;
+//     std::cout << "load_balancer:\t post_tweet() a " << username << " " << tweet
+//               << " "
+//               << duration_cast<microseconds>(
+//                      system_clock::now().time_since_epoch())
+//                      .count()
+//               << std::endl;
     next_worker = (next_worker + 1) % m_workers.size();
     auto res = m_workers[next_worker].post_tweet(username, tweet);
-    std::cout << "load_balancer:\t post_tweet() b " << username << " " << tweet
-              << " "
-              << duration_cast<microseconds>(
-                     system_clock::now().time_since_epoch())
-                     .count()
-              << std::endl;
+//     std::cout << "load_balancer:\t post_tweet() b " << username << " " << tweet
+//               << " "
+//               << duration_cast<microseconds>(
+//                      system_clock::now().time_since_epoch())
+//                      .count()
+//               << std::endl;
     return res;
   }
 
   void get_user_tweets(std::vector<Tweet> &_return,
                        const std::string &username) override {
-    std::cout << "load_balancer:\t get_user_tweets() a " << username << " "
-              << duration_cast<microseconds>(
-                     system_clock::now().time_since_epoch())
-                     .count()
-              << std::endl;
+//     std::cout << "load_balancer:\t get_user_tweets() a " << username << " "
+//               << duration_cast<microseconds>(
+//                      system_clock::now().time_since_epoch())
+//                      .count()
+//               << std::endl;
     next_worker = (next_worker + 1) % m_workers.size();
     m_workers[next_worker].get_user_tweets(_return, username);
-    std::cout << "load_balancer:\t get_user_tweets() b " << username << " "
-              << duration_cast<microseconds>(
-                     system_clock::now().time_since_epoch())
-                     .count()
-              << std::endl;
+//     std::cout << "load_balancer:\t get_user_tweets() b " << username << " "
+//               << duration_cast<microseconds>(
+//                      system_clock::now().time_since_epoch())
+//                      .count()
+//               << std::endl;
   }
 
   void generate_feed(std::vector<Tweet> &_return,
                      const std::string &username) override {
-    std::cout << "load_balancer:\t generate_feed() a " << username << " "
-              << duration_cast<microseconds>(
-                     system_clock::now().time_since_epoch())
-                     .count()
-              << std::endl;
+//     std::cout << "load_balancer:\t generate_feed() a " << username << " "
+//               << duration_cast<microseconds>(
+//                      system_clock::now().time_since_epoch())
+//                      .count()
+//               << std::endl;
     next_worker = (next_worker + 1) % m_workers.size();
     m_workers[next_worker].generate_feed(_return, username);
-    std::cout << "load_balancer:\t generate_feed() b " << username << " "
-              << duration_cast<microseconds>(
-                     system_clock::now().time_since_epoch())
-                     .count()
-              << std::endl;
+//     std::cout << "load_balancer:\t generate_feed() b " << username << " "
+//               << duration_cast<microseconds>(
+//                      system_clock::now().time_since_epoch())
+//                      .count()
+//               << std::endl;
   }
 
   bool create_user(const std::string &username) override {
-    std::cout << "load_balancer:\t create_user() a " << username << " "
-              << duration_cast<microseconds>(
-                     system_clock::now().time_since_epoch())
-                     .count()
-              << std::endl;
+//     std::cout << "load_balancer:\t create_user() a " << username << " "
+//               << duration_cast<microseconds>(
+//                      system_clock::now().time_since_epoch())
+//                      .count()
+//               << std::endl;
     next_worker = (next_worker + 1) % m_workers.size();
     auto res = m_workers[next_worker].create_user(username);
-    std::cout << "load_balancer:\t create_user() b " << username << " "
-              << duration_cast<microseconds>(
-                     system_clock::now().time_since_epoch())
-                     .count()
-              << std::endl;
+//     std::cout << "load_balancer:\t create_user() b " << username << " "
+//               << duration_cast<microseconds>(
+//                      system_clock::now().time_since_epoch())
+//                      .count()
+//               << std::endl;
     return res;
   }
 
   bool delete_user(const std::string &username) override {
-    std::cout << "load_balancer:\t delete_user() a " << username << " "
-              << duration_cast<microseconds>(
-                     system_clock::now().time_since_epoch())
-                     .count()
-              << std::endl;
+//     std::cout << "load_balancer:\t delete_user() a " << username << " "
+//               << duration_cast<microseconds>(
+//                      system_clock::now().time_since_epoch())
+//                      .count()
+//               << std::endl;
     next_worker = (next_worker + 1) % m_workers.size();
     auto res = m_workers[next_worker].delete_user(username);
-    std::cout << "load_balancer:\t delete_user() b " << username << " "
-              << duration_cast<microseconds>(
-                     system_clock::now().time_since_epoch())
-                     .count()
-              << std::endl;
+//     std::cout << "load_balancer:\t delete_user() b " << username << " "
+//               << duration_cast<microseconds>(
+//                      system_clock::now().time_since_epoch())
+//                      .count()
+//               << std::endl;
     return res;
   }
 
   void get_user(User &_return, const std::string &username) override {
-    std::cout << "load_balancer:\t get_user() a " << username << " "
-              << duration_cast<microseconds>(
-                     system_clock::now().time_since_epoch())
-                     .count()
-              << std::endl;
+//     std::cout << "load_balancer:\t get_user() a " << username << " "
+//               << duration_cast<microseconds>(
+//                      system_clock::now().time_since_epoch())
+//                      .count()
+//               << std::endl;
     next_worker = (next_worker + 1) % m_workers.size();
     m_workers[next_worker].get_user(_return, username);
-    std::cout << "load_balancer:\t get_user() b " << username << " "
-              << duration_cast<microseconds>(
-                     system_clock::now().time_since_epoch())
-                     .count()
-              << std::endl;
+//     std::cout << "load_balancer:\t get_user() b " << username << " "
+//               << duration_cast<microseconds>(
+//                      system_clock::now().time_since_epoch())
+//                      .count()
+//               << std::endl;
   }
 
   bool follow(const std::string &follower,
               const std::string &followee) override {
-    std::cout << "load_balancer:\t follow() a " << follower << " " << followee
-              << " "
-              << duration_cast<microseconds>(
-                     system_clock::now().time_since_epoch())
-                     .count()
-              << std::endl;
+//     std::cout << "load_balancer:\t follow() a " << follower << " " << followee
+//               << " "
+//               << duration_cast<microseconds>(
+//                      system_clock::now().time_since_epoch())
+//                      .count()
+//               << std::endl;
     next_worker = (next_worker + 1) % m_workers.size();
     auto res = m_workers[next_worker].follow(follower, followee);
-    std::cout << "load_balancer:\t follow() a " << follower << " " << followee
-              << " "
-              << duration_cast<microseconds>(
-                     system_clock::now().time_since_epoch())
-                     .count()
-              << std::endl;
+//     std::cout << "load_balancer:\t follow() a " << follower << " " << followee
+//               << " "
+//               << duration_cast<microseconds>(
+//                      system_clock::now().time_since_epoch())
+//                      .count()
+//               << std::endl;
     return res;
   }
 
   bool unfollow(const std::string &follower,
                 const std::string &followee) override {
-    std::cout << "load_balancer:\t unfollow() a " << follower << " " << followee
-              << " "
-              << duration_cast<microseconds>(
-                     system_clock::now().time_since_epoch())
-                     .count()
-              << std::endl;
+//     std::cout << "load_balancer:\t unfollow() a " << follower << " " << followee
+//               << " "
+//               << duration_cast<microseconds>(
+//                      system_clock::now().time_since_epoch())
+//                      .count()
+//               << std::endl;
     next_worker = (next_worker + 1) % m_workers.size();
     auto res = m_workers[next_worker].unfollow(follower, followee);
-    std::cout << "load_balancer:\t unfollow() a " << follower << " " << followee
-              << " "
-              << duration_cast<microseconds>(
-                     system_clock::now().time_since_epoch())
-                     .count()
-              << std::endl;
+//     std::cout << "load_balancer:\t unfollow() a " << follower << " " << followee
+//               << " "
+//               << duration_cast<microseconds>(
+//                      system_clock::now().time_since_epoch())
+//                      .count()
+//               << std::endl;
     return res;
   }
 

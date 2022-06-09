@@ -23,12 +23,12 @@ public:
   read_endpointHandler() = default;
 
   bool update_feed(const std::string &username, const Tweet &tweet) override {
-    std::cout << "read_endpoint\t update_feed a " << username << " "
-              << tweet.content << " "
-              << duration_cast<microseconds>(
-                     system_clock::now().time_since_epoch())
-                     .count()
-              << std::endl;
+    // std::cout << "read_endpoint\t update_feed a " << username << " "
+    //           << tweet.content << " "
+    //           << duration_cast<microseconds>(
+    //                  system_clock::now().time_since_epoch())
+    //                  .count()
+    //           << std::endl;
     auto u = std::string(username);
     auto it = m_feeds.find(u);
     if (it == m_feeds.end()) {
@@ -36,21 +36,21 @@ public:
       it = m_feeds.find(u);
     }
     it->second.push_back(tweet);
-    std::cout << "read_endpoint\t update_feed b " << username << " "
-              << tweet.content << " "
-              << duration_cast<microseconds>(
-                     system_clock::now().time_since_epoch())
-                     .count()
-              << std::endl;
+    // std::cout << "read_endpoint\t update_feed b " << username << " "
+    //           << tweet.content << " "
+    //           << duration_cast<microseconds>(
+    //                  system_clock::now().time_since_epoch())
+    //                  .count()
+    //           << std::endl;
     return true;
   }
 
   void get_feed(std::vector<Tweet> &_return, const std::string &username) {
-    std::cout << "read_endpoint\t get_feed a " << username << " "
-              << duration_cast<microseconds>(
-                     system_clock::now().time_since_epoch())
-                     .count()
-              << std::endl;
+    // std::cout << "read_endpoint\t get_feed a " << username << " "
+    //           << duration_cast<microseconds>(
+    //                  system_clock::now().time_since_epoch())
+    //                  .count()
+    //           << std::endl;
     auto u = std::string(username);
     auto it = m_feeds.find(u);
     if (it == m_feeds.end()) {
@@ -58,11 +58,11 @@ public:
     } else {
       _return = it->second;
     }
-    std::cout << "read_endpoint\t get_feed b " << username << " "
-              << duration_cast<microseconds>(
-                     system_clock::now().time_since_epoch())
-                     .count()
-              << std::endl;
+    // std::cout << "read_endpoint\t get_feed b " << username << " "
+    //           << duration_cast<microseconds>(
+    //                  system_clock::now().time_since_epoch())
+    //                  .count()
+    //           << std::endl;
   }
 
   std::map<std::string, std::vector<Tweet>> m_feeds;

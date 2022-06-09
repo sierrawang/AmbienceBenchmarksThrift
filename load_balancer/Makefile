@@ -1,4 +1,4 @@
-all: load_balancer tweet_db user_db worker write_endpoint read_endpoint
+all: load_balancer tweet_db user_db worker write_endpoint read_endpoint test_load_balancer
 
 load_balancer: load_balancer.cpp
 	g++ ../gen-cpp/worker.cpp ../gen-cpp/load_balancer_types.cpp load_balancer.cpp -o load_balancer -lthrift
@@ -22,4 +22,4 @@ test_load_balancer: test_load_balancer.cpp
 	g++ ../gen-cpp/write_endpoint.cpp ../gen-cpp/load_balancer_types.cpp ../gen-cpp/read_endpoint.cpp test_load_balancer.cpp -o test_load_balancer -lthrift
 
 clean:
-	rm test_load_balancer load_balancer tweet_db user_db worker write_endpoint read_endpoint
+	rm test_load_balancer load_balancer tweet_db user_db worker write_endpoint read_endpoint worker_0.txt worker_1.txt worker_2.txt worker_3.txt worker_4.txt load_balancer.txt read_endpoint.txt write_endpoint.txt tweet_db.txt user_db.txt test_load_balancer.txt

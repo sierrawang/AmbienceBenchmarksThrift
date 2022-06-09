@@ -25,7 +25,7 @@ class UserDbHandler : public user_dbIf {
 public:
   UserDbHandler() {
     std::shared_ptr<apache::thrift::transport::TTransport> socket(
-        new apache::thrift::transport::TSocket("localhost", TWEETDB_PORT));
+        new apache::thrift::transport::TSocket("db_con", TWEETDB_PORT));
     std::shared_ptr<apache::thrift::transport::TTransport> transport(
         new apache::thrift::transport::TBufferedTransport(socket));
     std::shared_ptr<apache::thrift::protocol::TProtocol> protocol(

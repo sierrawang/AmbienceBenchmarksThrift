@@ -25,7 +25,7 @@ class WorkerHandler : public workerIf {
 public:
   WorkerHandler() {
     std::shared_ptr<apache::thrift::transport::TTransport> tweet_db_socket(
-        new apache::thrift::transport::TSocket("localhost", TWEETDB_PORT));
+        new apache::thrift::transport::TSocket("db_con", TWEETDB_PORT));
     std::shared_ptr<apache::thrift::transport::TTransport> tweet_db_transport(
         new apache::thrift::transport::TBufferedTransport(tweet_db_socket));
     std::shared_ptr<apache::thrift::protocol::TProtocol> tweet_db_protocol(
@@ -33,7 +33,7 @@ public:
     m_tweets = new tweet_dbClient(tweet_db_protocol);
 
     std::shared_ptr<apache::thrift::transport::TTransport> user_db_socket(
-        new apache::thrift::transport::TSocket("localhost", USERDB_PORT));
+        new apache::thrift::transport::TSocket("db_con", USERDB_PORT));
     std::shared_ptr<apache::thrift::transport::TTransport> user_db_transport(
         new apache::thrift::transport::TBufferedTransport(user_db_socket));
     std::shared_ptr<apache::thrift::protocol::TProtocol> user_db_protocol(
@@ -41,7 +41,7 @@ public:
     m_users = new user_dbClient(user_db_protocol);
 
     std::shared_ptr<apache::thrift::transport::TTransport> read_endpoint_socket(
-        new apache::thrift::transport::TSocket("localhost", READ_ENDPT_PORT));
+        new apache::thrift::transport::TSocket("read_edpt", READ_ENDPT_PORT));
     std::shared_ptr<apache::thrift::transport::TTransport>
         read_endpoint_transport(
             new apache::thrift::transport::TBufferedTransport(

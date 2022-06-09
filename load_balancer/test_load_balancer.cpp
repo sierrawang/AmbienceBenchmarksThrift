@@ -16,7 +16,7 @@ using namespace load_balancer;
 
 int main() {
     std::shared_ptr<apache::thrift::transport::TTransport> wesocket(
-        new apache::thrift::transport::TSocket("localhost", WRITE_ENDPT_PORT));
+        new apache::thrift::transport::TSocket("write_edpt", WRITE_ENDPT_PORT));
     std::shared_ptr<apache::thrift::transport::TTransport> wetransport(
         new apache::thrift::transport::TBufferedTransport(wesocket));
     std::shared_ptr<apache::thrift::protocol::TProtocol> weprotocol(
@@ -24,7 +24,7 @@ int main() {
     write_endpointClient write_endpointclient(weprotocol);
 
     std::shared_ptr<apache::thrift::transport::TTransport> resocket(
-        new apache::thrift::transport::TSocket("localhost", READ_ENDPT_PORT));
+        new apache::thrift::transport::TSocket("write_edpt", READ_ENDPT_PORT));
     std::shared_ptr<apache::thrift::transport::TTransport> retransport(
         new apache::thrift::transport::TBufferedTransport(resocket));
     std::shared_ptr<apache::thrift::protocol::TProtocol> reprotocol(

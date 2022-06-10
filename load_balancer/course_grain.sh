@@ -16,6 +16,8 @@ docker run -p 3001:3000 --net mynet --name worker_con -v /home/ubuntu/AmbienceBe
 
 sleep 5
 
-python3 load_balancer_client.py > course_grain_results/linux_course_grain_parsed.txt
+python3 load_balancer_client.py 
+
+python3 parse_course_grain.py > course_grain_results/linux_course_grain_parsed.txt 
 
 echo DONE!

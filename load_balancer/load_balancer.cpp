@@ -23,7 +23,7 @@ class LoadBalancerHandler : public workerIf {
 public:
   LoadBalancerHandler() {
     for (auto i = 0; i < num_workers; i++) {
-      int worker_port = WORKER_PORT_BASE + next_worker;
+      int worker_port = WORKER_PORT_BASE + i;
       std::shared_ptr<apache::thrift::transport::TTransport> socket(
           new apache::thrift::transport::TSocket("worker_con", worker_port));
       std::shared_ptr<apache::thrift::transport::TTransport> transport(

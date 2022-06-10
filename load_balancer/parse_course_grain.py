@@ -1,6 +1,6 @@
 import statistics
 
-def parse_section(method_name, line, it, clock_speed):
+def parse_section(method_name, line, it):
     results = []
 
     # Process all create_user data
@@ -9,13 +9,13 @@ def parse_section(method_name, line, it, clock_speed):
 
     while method_name in line:
         # Get before timestamp
-        assert line.split()[4] == 'a'
-        time_a = int(line.split()[-1])/clock_speed
+        assert line.split()[2] == 'a'
+        time_a = int(line.split()[-1])
 
         # Get after timestamp
         line = next(it)
-        assert line.split()[4] == 'b'
-        time_b = int(line.split()[-1])/clock_speed
+        assert line.split()[2] == 'b'
+        time_b = int(line.split()[-1])
 
         # Append the round trip time
         assert time_b > time_a
@@ -38,23 +38,19 @@ def parse(method_name, results):
 def main():
     # Open the results file
     f = open('course_grain_results/linux_load_balancer.txt')
+    print("hello")
 
     # Grab the lines
     lines = f.readlines()
     it = iter(lines)
 
-    # Grab the clockspeed
-    line = next(it)
-    while "RDTSC ticks per us:" not in line:
-        line = next(it)
-    clock_speed = int(line.split()[-1])
-
     # Parse the results
-    create_user, line = parse_section("create_user()", line, it, clock_speed)
-    follow, line = parse_section("follow()", line, it, clock_speed)
-    post_tweet, line = parse_section("post_tweet()", line, it, clock_speed)
-    unfollow, line = parse_section("unfollow()", line, it, clock_speed)
-    delete_user, line = parse_section("delete_user()", line, it, clock_speed)
+    line = next(it)
+    create_user, line = parse_section("create_user()", line, it)
+    follow, line = parse_section("follow()", line, it)
+    post_tweet, line = parse_section("post_tweet()", line, it)
+    unfollow, line = parse_section("unfollow()", line, it)
+    delete_user, line = parse_section("delete_user()", line, it)
 
     # Parse the results
     parse("create_user()", create_user)

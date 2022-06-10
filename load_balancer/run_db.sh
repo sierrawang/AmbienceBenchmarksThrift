@@ -4,7 +4,7 @@ cd load_balancer
 
 make
 
-./tweet_db > course_grain_results/linux_tweet_db.txt &
+./tweet_db > fine_grain_results/linux_tweet_db.txt &
 sleep 1
-./user_db > course_grain_results/linux_user_db.txt
+./user_db > fine_grain_results/linux_user_db.txt
 

@@ -42,11 +42,11 @@ public:
   }
 
   bool create_user(const std::string &username) override {
-    // std::cout << "user_db:\t create_user() a " << username << " "
-    //           << duration_cast<microseconds>(
-    //                  system_clock::now().time_since_epoch())
-    //                  .count()
-    //           << std::endl;
+    std::cout << "user_db:\t create_user() a " << username << " "
+              << duration_cast<microseconds>(
+                     system_clock::now().time_since_epoch())
+                     .count()
+              << std::endl;
     std::string u = std::string(username);
 
     auto search = users.find(u);
@@ -54,28 +54,28 @@ public:
       User new_user{};
       new_user.username = u;
       users.emplace(u, new_user);
-    //   std::cout << "user_db:\t create_user() b " << username << " "
-    //             << duration_cast<microseconds>(
-    //                    system_clock::now().time_since_epoch())
-    //                    .count()
-    //             << std::endl;
+      std::cout << "user_db:\t create_user() b " << username << " "
+                << duration_cast<microseconds>(
+                       system_clock::now().time_since_epoch())
+                       .count()
+                << std::endl;
       return true;
     }
 
-    // std::cout << "user_db:\t create_user() b " << username << " "
-    //           << duration_cast<microseconds>(
-    //                  system_clock::now().time_since_epoch())
-    //                  .count()
-    //           << std::endl;
+    std::cout << "user_db:\t create_user() b " << username << " "
+              << duration_cast<microseconds>(
+                     system_clock::now().time_since_epoch())
+                     .count()
+              << std::endl;
     return false;
   }
 
   bool delete_user(const std::string &username) override {
-    // std::cout << "user_db:\t delete_user() a " << username << " "
-    //           << duration_cast<microseconds>(
-    //                  system_clock::now().time_since_epoch())
-    //                  .count()
-    //           << std::endl;
+    std::cout << "user_db:\t delete_user() a " << username << " "
+              << duration_cast<microseconds>(
+                     system_clock::now().time_since_epoch())
+                     .count()
+              << std::endl;
     std::string u = std::string(username);
 
     auto user = users.find(u);
@@ -105,28 +105,28 @@ public:
       // Delete this user from this database
       users.erase(user);
 
-    //   std::cout << "user_db:\t delete_user() b " << username << " "
-    //             << duration_cast<microseconds>(
-    //                    system_clock::now().time_since_epoch())
-    //                    .count()
-    //             << std::endl;
+      std::cout << "user_db:\t delete_user() b " << username << " "
+                << duration_cast<microseconds>(
+                       system_clock::now().time_since_epoch())
+                       .count()
+                << std::endl;
       return true;
     }
 
-    // std::cout << "user_db:\t delete_user() b " << username << " "
-    //           << duration_cast<microseconds>(
-    //                  system_clock::now().time_since_epoch())
-    //                  .count()
-    //           << std::endl;
+    std::cout << "user_db:\t delete_user() b " << username << " "
+              << duration_cast<microseconds>(
+                     system_clock::now().time_since_epoch())
+                     .count()
+              << std::endl;
     return false;
   }
 
   void get_user(User &_return, const std::string &username) override {
-    // std::cout << "user_db:\t get_user() a " << username << " "
-    //           << duration_cast<microseconds>(
-    //                  system_clock::now().time_since_epoch())
-    //                  .count()
-    //           << std::endl;
+    std::cout << "user_db:\t get_user() a " << username << " "
+              << duration_cast<microseconds>(
+                     system_clock::now().time_since_epoch())
+                     .count()
+              << std::endl;
     std::string u = std::string(username);
     auto search = users.find(u);
     if (search != users.end()) {
@@ -135,20 +135,20 @@ public:
       // return an empty user
       _return = User();
     }
-    // std::cout << "user_db:\t get_user() b " << username
-    //           << duration_cast<microseconds>(
-    //                  system_clock::now().time_since_epoch())
-    //                  .count()
-    //           << std::endl;
+    std::cout << "user_db:\t get_user() b " << username
+              << duration_cast<microseconds>(
+                     system_clock::now().time_since_epoch())
+                     .count()
+              << std::endl;
   }
 
   bool follow(const std::string &follower,
               const std::string &followee) override {
-    // std::cout << "user_db:\t follow() a " << follower << " " << followee << " "
-    //           << duration_cast<microseconds>(
-    //                  system_clock::now().time_since_epoch())
-    //                  .count()
-    //           << std::endl;
+    std::cout << "user_db:\t follow() a " << follower << " " << followee << " "
+              << duration_cast<microseconds>(
+                     system_clock::now().time_since_epoch())
+                     .count()
+              << std::endl;
     std::string fr = std::string(follower);
     std::string fe = std::string(followee);
 
@@ -165,31 +165,31 @@ public:
       if (std::find(fe_frs.begin(), fe_frs.end(), fr) == fe_frs.end()) {
         fe_frs.push_back(fr);
       }
-    //   std::cout << "user_db:\t follow() b " << follower << " " << followee
-    //             << " "
-    //             << duration_cast<microseconds>(
-    //                    system_clock::now().time_since_epoch())
-    //                    .count()
-    //             << std::endl;
+      std::cout << "user_db:\t follow() b " << follower << " " << followee
+                << " "
+                << duration_cast<microseconds>(
+                       system_clock::now().time_since_epoch())
+                       .count()
+                << std::endl;
       return true;
     }
 
-    // std::cout << "user_db:\t follow() b " << follower << " " << followee << " "
-    //           << duration_cast<microseconds>(
-    //                  system_clock::now().time_since_epoch())
-    //                  .count()
-    //           << std::endl;
+     std::cout << "user_db:\t follow() b " << follower << " " << followee << " "
+              << duration_cast<microseconds>(
+                     system_clock::now().time_since_epoch())
+                     .count()
+              << std::endl;
     return false;
   }
 
   bool unfollow(const std::string &follower,
                 const std::string &followee) override {
-    // std::cout << "user_db:\t unfollow() a " << follower << " " << followee
-    //           << " "
-    //           << duration_cast<microseconds>(
-    //                  system_clock::now().time_since_epoch())
-    //                  .count()
-    //           << std::endl;
+     std::cout << "user_db:\t unfollow() a " << follower << " " << followee
+              << " "
+              << duration_cast<microseconds>(
+                     system_clock::now().time_since_epoch())
+                     .count()
+              << std::endl;
     std::string fr = std::string(follower);
     std::string fe = std::string(followee);
 
@@ -209,21 +209,21 @@ public:
         fe_frs.erase(fr_entry);
       }
 
-    //   std::cout << "user_db:\t unfollow() b " << follower << " " << followee
-    //             << " "
-    //             << duration_cast<microseconds>(
-    //                    system_clock::now().time_since_epoch())
-    //                    .count()
-    //             << std::endl;
+      std::cout << "user_db:\t unfollow() b " << follower << " " << followee
+                << " "
+                << duration_cast<microseconds>(
+                       system_clock::now().time_since_epoch())
+                       .count()
+                << std::endl;
       return true;
     }
 
-    // std::cout << "user_db:\t unfollow() b " << follower << " " << followee
-    //           << " "
-    //           << duration_cast<microseconds>(
-    //                  system_clock::now().time_since_epoch())
-    //                  .count()
-    //           << std::endl;
+     std::cout << "user_db:\t unfollow() b " << follower << " " << followee
+              << " "
+              << duration_cast<microseconds>(
+                     system_clock::now().time_since_epoch())
+                     .count()
+              << std::endl;
     return false;
   }
 

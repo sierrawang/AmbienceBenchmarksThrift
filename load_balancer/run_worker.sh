@@ -6,9 +6,9 @@ make
 
 for (( i = 0; i < 5; i++ ))
 do 
-	./worker $i > course_grain_results/linux_worker_$i.txt &
+	./worker $i > fine_grain_results/linux_worker_$i.txt &
 done
 
 sleep 1
 
-./load_balancer > course_grain_results/linux_load_balancer.txt
+./load_balancer > fine_grain_results/linux_load_balancer.txt

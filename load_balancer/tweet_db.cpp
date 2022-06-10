@@ -26,32 +26,32 @@ public:
   TweetDbHandler() = default;
 
   bool delete_user(const std::string &username) override {
-    // std::cout << "tweet_db:\t delete_user() a " << username << " "
-    //           << duration_cast<microseconds>(
-    //                  system_clock::now().time_since_epoch())
-    //                  .count()
-    //           << std::endl;
+    std::cout << "tweet_db:\t delete_user() a " << username << " "
+              << duration_cast<microseconds>(
+                     system_clock::now().time_since_epoch())
+                     .count()
+              << std::endl;
     std::string u = std::string(username);
     auto user = tweets.find(u);
     if (user != tweets.end()) {
       tweets.erase(user);
     }
-    // std::cout << "tweet_db:\t delete_user() b " << username << " "
-    //           << duration_cast<microseconds>(
-    //                  system_clock::now().time_since_epoch())
-    //                  .count()
-    //           << std::endl;
+    std::cout << "tweet_db:\t delete_user() b " << username << " "
+              << duration_cast<microseconds>(
+                     system_clock::now().time_since_epoch())
+                     .count()
+              << std::endl;
     return true;
   }
 
   void post_tweet(Tweet &_return, const std::string &username,
                   const std::string &tweet) override {
-    // std::cout << "tweet_db:\t post_tweet() a " << username << " " << tweet
-    //           << " "
-    //           << duration_cast<microseconds>(
-    //                  system_clock::now().time_since_epoch())
-    //                  .count()
-    //           << std::endl;
+    std::cout << "tweet_db:\t post_tweet() a " << username << " " << tweet
+              << " "
+              << duration_cast<microseconds>(
+                     system_clock::now().time_since_epoch())
+                     .count()
+              << std::endl;
     std::string u = std::string(username);
 
     Tweet t;
@@ -73,21 +73,21 @@ public:
 
     _return = t;
 
-    // std::cout << "tweet_db:\t post_tweet() b " << username << " " << tweet
-    //           << " "
-    //           << duration_cast<microseconds>(
-    //                  system_clock::now().time_since_epoch())
-    //                  .count()
-    //           << std::endl;
+    std::cout << "tweet_db:\t post_tweet() b " << username << " " << tweet
+              << " "
+              << duration_cast<microseconds>(
+                     system_clock::now().time_since_epoch())
+                     .count()
+              << std::endl;
   }
 
   void get_user_tweets(std::vector<Tweet> &_return,
                        const std::string &username) override {
-    // std::cout << "tweet_db:\t get_user_tweets() a " << username << " "
-    //           << duration_cast<microseconds>(
-    //                  system_clock::now().time_since_epoch())
-    //                  .count()
-    //           << std::endl;
+    std::cout << "tweet_db:\t get_user_tweets() a " << username << " "
+              << duration_cast<microseconds>(
+                     system_clock::now().time_since_epoch())
+                     .count()
+              << std::endl;
 
     std::string u = std::string(username);
 
@@ -97,11 +97,11 @@ public:
     } else {
       _return = std::vector<Tweet>();
     }
-    // std::cout << "tweet_db:\t get_user_tweets() b " << username << " "
-    //           << duration_cast<microseconds>(
-    //                  system_clock::now().time_since_epoch())
-    //                  .count()
-    //           << std::endl;
+    std::cout << "tweet_db:\t get_user_tweets() b " << username << " "
+              << duration_cast<microseconds>(
+                     system_clock::now().time_since_epoch())
+                     .count()
+              << std::endl;
   }
 
 private:

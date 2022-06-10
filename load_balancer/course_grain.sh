@@ -18,6 +18,6 @@ sleep 5
 
 python3 load_balancer_client.py 
 
-python3 parse_course_grain.py > course_grain_results/linux_course_grain_parsed.txt 
+python3 parse_fine_grain.py > fine_grain_results/linux_fine_grain_parsed.txt 
 
 echo DONE!

@@ -37,7 +37,7 @@ def parse(method_name, results):
 
 def main():
     # Open the results file
-    f = open('course_grain_results/linux_load_balancer.txt')
+    f = open('fine_grain_results/linux_load_balancer.txt')
     print("hello")
 
     # Grab the lines

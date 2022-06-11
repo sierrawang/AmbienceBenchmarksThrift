@@ -284,7 +284,7 @@ public:
 
 int main(int argc, char **argv) {
   if (argc < 2) {
-    std::cout << "Usage: ./worker {0-7}" << std::endl;
+    std::cout << "Usage: ./worker i" << std::endl;
     return 1;
   }
 

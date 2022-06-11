@@ -179,7 +179,7 @@ public:
 
 private:
   int next_worker = 0;
-  int num_workers = 5;
+  int num_workers = 64;
   std::vector<workerClient> m_workers;
   std::vector<std::shared_ptr<apache::thrift::transport::TTransport>>
       transports;

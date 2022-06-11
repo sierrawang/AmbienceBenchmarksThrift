@@ -1,4 +1,5 @@
 #include <iostream>
+#include <mutex>
 #include <ostream>
 #include <thrift/protocol/TBinaryProtocol.h>
 #include <thrift/server/TThreadedServer.h>
@@ -32,10 +33,12 @@ public:
     //                  .count()
     //           << std::endl;
     std::string u = std::string(username);
+    db_lock.lock();
     auto user = tweets.find(u);
     if (user != tweets.end()) {
       tweets.erase(user);
     }
+    db_lock.unlock();
     // std::cout << "tweet_db:\t delete_user() b " << username << " "
     //           << duration_cast<microseconds>(
     //                  system_clock::now().time_since_epoch())
@@ -60,9 +63,12 @@ public:
     t.timestamp =
         duration_cast<microseconds>(system_clock::now().time_since_epoch())
             .count();
+    id_lock.lock();
     t.id = cur_id;
     cur_id++;
+    id_lock.unlock();
 
+    db_lock.lock();
     auto search = tweets.find(u);
     if (search != tweets.end()) {
       auto &user_tweets = search->second;
@@ -70,6 +76,7 @@ public:
     } else {
       tweets.emplace(u, std::vector<Tweet>{t});
     }
+    db_lock.unlock();
 
     _return = t;
 
@@ -91,12 +98,14 @@ public:
 
     std::string u = std::string(username);
 
+    db_lock.lock();
     auto search = tweets.find(u);
     if (search != tweets.end()) {
       _return = search->second;
     } else {
       _return = std::vector<Tweet>();
     }
+    db_lock.unlock();
     // std::cout << "tweet_db:\t get_user_tweets() b " << username << " "
     //           << duration_cast<microseconds>(
     //                  system_clock::now().time_since_epoch())
@@ -105,6 +114,8 @@ public:
   }
 
 private:
+  std::mutex db_lock;
+  std::mutex id_lock;
   uint64_t cur_id;
   std::map<std::string, std::vector<Tweet>> tweets;
 };

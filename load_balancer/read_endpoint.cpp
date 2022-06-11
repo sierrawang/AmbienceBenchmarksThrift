@@ -2,6 +2,7 @@
 #include "ports.h"
 #include <iostream>
 #include <map>
+#include <mutex>
 #include <thrift/protocol/TBinaryProtocol.h>
 #include <thrift/server/TThreadedServer.h>
 #include <thrift/transport/TServerSocket.h>
@@ -30,12 +31,14 @@ public:
     //                  .count()
     //           << std::endl;
     auto u = std::string(username);
+    feeds_lock.lock();
     auto it = m_feeds.find(u);
     if (it == m_feeds.end()) {
       m_feeds.emplace(u, std::vector<Tweet>());
       it = m_feeds.find(u);
     }
     it->second.push_back(tweet);
+    feeds_lock.unlock();
     // std::cout << "read_endpoint\t update_feed b " << username << " "
     //           << tweet.content << " "
     //           << duration_cast<microseconds>(
@@ -52,12 +55,14 @@ public:
     //                  .count()
     //           << std::endl;
     auto u = std::string(username);
+    feeds_lock.lock();
     auto it = m_feeds.find(u);
     if (it == m_feeds.end()) {
       _return = std::vector<Tweet>();
     } else {
       _return = it->second;
     }
+    feeds_lock.unlock();
     // std::cout << "read_endpoint\t get_feed b " << username << " "
     //           << duration_cast<microseconds>(
     //                  system_clock::now().time_since_epoch())
@@ -65,6 +70,8 @@ public:
     //           << std::endl;
   }
 
+  private:
+  std::mutex feeds_lock;
   std::map<std::string, std::vector<Tweet>> m_feeds;
 };
 

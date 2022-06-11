@@ -1,6 +1,7 @@
 #include <iostream>
 #include <map>
 #include <memory>
+#include <mutex>
 #include <ostream>
 #include <thrift/protocol/TBinaryProtocol.h>
 #include <thrift/server/TThreadedServer.h>
@@ -35,10 +36,10 @@ public:
     transport->open();
   }
 
-  ~UserDbHandler() { 
-      for (auto& t : transports) {
-          t->close();
-      }
+  ~UserDbHandler() {
+    for (auto &t : transports) {
+      t->close();
+    }
   }
 
   bool create_user(const std::string &username) override {
@@ -49,16 +50,18 @@ public:
     //           << std::endl;
     std::string u = std::string(username);
 
+    db_lock.lock();
     auto search = users.find(u);
     if (search == users.end()) {
       User new_user{};
       new_user.username = u;
       users.emplace(u, new_user);
-    //   std::cout << "user_db:\t create_user() b " << username << " "
-    //             << duration_cast<microseconds>(
-    //                    system_clock::now().time_since_epoch())
-    //                    .count()
-    //             << std::endl;
+      //   std::cout << "user_db:\t create_user() b " << username << " "
+      //             << duration_cast<microseconds>(
+      //                    system_clock::now().time_since_epoch())
+      //                    .count()
+      //             << std::endl;
+      db_lock.unlock();
       return true;
     }
 
@@ -67,6 +70,7 @@ public:
     //                  system_clock::now().time_since_epoch())
     //                  .count()
     //           << std::endl;
+    db_lock.unlock();
     return false;
   }
 
@@ -78,6 +82,7 @@ public:
     //           << std::endl;
     std::string u = std::string(username);
 
+    db_lock.lock();
     auto user = users.find(u);
     if (user != users.end()) {
 
@@ -104,12 +109,13 @@ public:
 
       // Delete this user from this database
       users.erase(user);
+      db_lock.unlock();
 
-    //   std::cout << "user_db:\t delete_user() b " << username << " "
-    //             << duration_cast<microseconds>(
-    //                    system_clock::now().time_since_epoch())
-    //                    .count()
-    //             << std::endl;
+      //   std::cout << "user_db:\t delete_user() b " << username << " "
+      //             << duration_cast<microseconds>(
+      //                    system_clock::now().time_since_epoch())
+      //                    .count()
+      //             << std::endl;
       return true;
     }
 
@@ -118,6 +124,7 @@ public:
     //                  system_clock::now().time_since_epoch())
     //                  .count()
     //           << std::endl;
+    db_lock.unlock();
     return false;
   }
 
@@ -128,6 +135,7 @@ public:
     //                  .count()
     //           << std::endl;
     std::string u = std::string(username);
+    db_lock.lock();
     auto search = users.find(u);
     if (search != users.end()) {
       _return = search->second;
@@ -135,6 +143,7 @@ public:
       // return an empty user
       _return = User();
     }
+    db_lock.unlock();
     // std::cout << "user_db:\t get_user() b " << username
     //           << duration_cast<microseconds>(
     //                  system_clock::now().time_since_epoch())
@@ -144,7 +153,8 @@ public:
 
   bool follow(const std::string &follower,
               const std::string &followee) override {
-    // std::cout << "user_db:\t follow() a " << follower << " " << followee << " "
+    // std::cout << "user_db:\t follow() a " << follower << " " << followee << "
+    // "
     //           << duration_cast<microseconds>(
     //                  system_clock::now().time_since_epoch())
     //                  .count()
@@ -153,6 +163,7 @@ public:
     std::string fe = std::string(followee);
 
     // Make the follower follow the followee
+    db_lock.lock();
     auto fr_ptr = users.find(fr);
     auto fe_ptr = users.find(fe);
     if (fr_ptr != users.end() && fe_ptr != users.end()) {
@@ -165,20 +176,23 @@ public:
       if (std::find(fe_frs.begin(), fe_frs.end(), fr) == fe_frs.end()) {
         fe_frs.push_back(fr);
       }
-    //   std::cout << "user_db:\t follow() b " << follower << " " << followee
-    //             << " "
-    //             << duration_cast<microseconds>(
-    //                    system_clock::now().time_since_epoch())
-    //                    .count()
-    //             << std::endl;
+      //   std::cout << "user_db:\t follow() b " << follower << " " << followee
+      //             << " "
+      //             << duration_cast<microseconds>(
+      //                    system_clock::now().time_since_epoch())
+      //                    .count()
+      //             << std::endl;
+      db_lock.unlock();
       return true;
     }
 
-    // std::cout << "user_db:\t follow() b " << follower << " " << followee << " "
+    // std::cout << "user_db:\t follow() b " << follower << " " << followee << "
+    // "
     //           << duration_cast<microseconds>(
     //                  system_clock::now().time_since_epoch())
     //                  .count()
     //           << std::endl;
+    db_lock.unlock();
     return false;
   }
 
@@ -194,6 +208,7 @@ public:
     std::string fe = std::string(followee);
 
     // Make the follower follow the followee
+    db_lock.lock();
     auto fr_ptr = users.find(fr);
     auto fe_ptr = users.find(fe);
     if (fr_ptr != users.end() && fe_ptr != users.end()) {
@@ -209,12 +224,14 @@ public:
         fe_frs.erase(fr_entry);
       }
 
-    //   std::cout << "user_db:\t unfollow() b " << follower << " " << followee
-    //             << " "
-    //             << duration_cast<microseconds>(
-    //                    system_clock::now().time_since_epoch())
-    //                    .count()
-    //             << std::endl;
+      //   std::cout << "user_db:\t unfollow() b " << follower << " " <<
+      //   followee
+      //             << " "
+      //             << duration_cast<microseconds>(
+      //                    system_clock::now().time_since_epoch())
+      //                    .count()
+      //             << std::endl;
+      db_lock.unlock();
       return true;
     }
 
@@ -224,10 +241,12 @@ public:
     //                  system_clock::now().time_since_epoch())
     //                  .count()
     //           << std::endl;
+    db_lock.unlock();
     return false;
   }
 
 private:
+  std::mutex db_lock;
   std::map<std::string, User> users;
   tweet_dbClient *client;
   std::vector<std::shared_ptr<apache::thrift::transport::TTransport>>

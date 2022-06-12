@@ -52,8 +52,11 @@ public:
               << std::endl;
     next_worker_lock.lock();
     next_worker = (next_worker + 1) % m_workers.size();
+    auto curr_worker = next_worker;
     next_worker_lock.unlock();
-    auto res = m_workers[next_worker].post_tweet(username, tweet);
+    worker_locks[curr_worker].lock();
+    auto res = m_workers[curr_worker].post_tweet(username, tweet);
+    worker_locks[curr_worker].unlock();
     std::cout << "load_balancer:\t post_tweet() b " << username << " " << tweet
               << " "
               << duration_cast<microseconds>(
@@ -72,8 +75,11 @@ public:
               << std::endl;
     next_worker_lock.lock();
     next_worker = (next_worker + 1) % m_workers.size();
+    auto curr_worker = next_worker;
     next_worker_lock.unlock();
-    m_workers[next_worker].get_user_tweets(_return, username);
+    worker_locks[curr_worker].lock();
+    m_workers[curr_worker].get_user_tweets(_return, username);
+    worker_locks[curr_worker].unlock();
     std::cout << "load_balancer:\t get_user_tweets() b " << username << " "
               << duration_cast<microseconds>(
                      system_clock::now().time_since_epoch())
@@ -90,8 +96,11 @@ public:
               << std::endl;
     next_worker_lock.lock();
     next_worker = (next_worker + 1) % m_workers.size();
+    auto curr_worker = next_worker;
     next_worker_lock.unlock();
-    m_workers[next_worker].generate_feed(_return, username);
+    worker_locks[curr_worker].lock();
+    m_workers[curr_worker].generate_feed(_return, username);
+    worker_locks[curr_worker].unlock();
     std::cout << "load_balancer:\t generate_feed() b " << username << " "
               << duration_cast<microseconds>(
                      system_clock::now().time_since_epoch())
@@ -149,8 +158,11 @@ public:
               << std::endl;
     next_worker_lock.lock();
     next_worker = (next_worker + 1) % m_workers.size();
+    auto curr_worker = next_worker;
     next_worker_lock.unlock();
-    m_workers[next_worker].get_user(_return, username);
+    worker_locks[curr_worker].lock();
+    m_workers[curr_worker].get_user(_return, username);
+    worker_locks[curr_worker].unlock();
     std::cout << "load_balancer:\t get_user() b " << username << " "
               << duration_cast<microseconds>(
                      system_clock::now().time_since_epoch())
@@ -168,8 +180,11 @@ public:
               << std::endl;
     next_worker_lock.lock();
     next_worker = (next_worker + 1) % m_workers.size();
+    auto curr_worker = next_worker;
     next_worker_lock.unlock();
-    auto res = m_workers[next_worker].follow(follower, followee);
+    worker_locks[curr_worker].lock();
+    auto res = m_workers[curr_worker].follow(follower, followee);
+    worker_locks[curr_worker].unlock();
     std::cout << "load_balancer:\t follow() b " << follower << " " << followee
               << " "
               << duration_cast<microseconds>(
@@ -189,8 +204,11 @@ public:
               << std::endl;
     next_worker_lock.lock();
     next_worker = (next_worker + 1) % m_workers.size();
+    auto curr_worker = next_worker;
     next_worker_lock.unlock();
-    auto res = m_workers[next_worker].unfollow(follower, followee);
+    worker_locks[curr_worker].lock();
+    auto res = m_workers[curr_worker].unfollow(follower, followee);
+    worker_locks[curr_worker].unlock();
     std::cout << "load_balancer:\t unfollow() b " << follower << " " << followee
               << " "
               << duration_cast<microseconds>(
@@ -201,9 +219,9 @@ public:
   }
 
 private:
-  std::mutex next_worker_lock;
   int next_worker = 0;
   int num_workers = 5;
+  std::mutex next_worker_lock;
   std::mutex worker_locks[5];
   std::vector<workerClient> m_workers;
   std::vector<std::shared_ptr<apache::thrift::transport::TTransport>>

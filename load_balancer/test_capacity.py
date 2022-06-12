@@ -15,41 +15,45 @@ from thrift.protocol import TBinaryProtocol
 
 # Hammer the load_balancer
 def run_client():
-    # Make socket
-    transport = TSocket.TSocket('172.18.0.4', 9089)
+    try:
+        # Make socket
+        transport = TSocket.TSocket('172.18.0.4', 9089)
 
-    # Buffering is critical. Raw sockets are very slow
-    transport = TTransport.TBufferedTransport(transport)
+        # Buffering is critical. Raw sockets are very slow
+        transport = TTransport.TBufferedTransport(transport)
 
-    # Wrap in a protocol
-    protocol = TBinaryProtocol.TBinaryProtocol(transport)
+        # Wrap in a protocol
+        protocol = TBinaryProtocol.TBinaryProtocol(transport)
 
-    # Create a client to use the protocol encoder
-    m_load_balancer = worker.Client(protocol)
+        # Create a client to use the protocol encoder
+        m_load_balancer = worker.Client(protocol)
 
-    # Connect!
-    transport.open()
+        # Connect!
+        transport.open()
 
-    num_users = 500000
+        num_users = 100
 
-    # Generate random usernames
-    letters = string.ascii_letters
-    usernames = []
-    for n in range(num_users):
-        s = ''.join(random.choice(letters) for i in range(10))
-        usernames.append(s)
+        # Generate random usernames
+        letters = string.ascii_letters
+        usernames = []
+        for n in range(num_users):
+            s = ''.join(random.choice(letters) for i in range(10))
+            usernames.append(s)
 
-    # Test 500000
-    start = time.time()
-    for u in usernames:
-        m_load_balancer.create_user(u)
-        m_load_balancer.delete_user(u)
-    finish = time.time()
+        start = time.time()
+        for u in usernames:
+            m_load_balancer.create_user(u)
+            m_load_balancer.delete_user(u)
+        finish = time.time()
 
-    # Record diff in microseconds
-    diff = (finish - start) * 1000.0
-    print(diff)
+        # Record diff in microseconds
+        diff = (finish - start) * 1000.0
+        print(diff)
 
+        transport.close()
+    
+    except Exception:
+        print("Client failed")
     exit()
 
 def start_clients(client_procs):
@@ -58,6 +62,9 @@ def start_clients(client_procs):
         pi = os.fork()
         if (pi == 0):
             run_client()
+
+    for _ in range(client_procs):
+        os.wait()
 
 def main():
     if (len(sys.argv) < 2):

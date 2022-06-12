@@ -107,8 +107,11 @@ public:
               << std::endl;
     next_worker_lock.lock();
     next_worker = (next_worker + 1) % m_workers.size();
+    auto curr_worker = next_worker;
     next_worker_lock.unlock();
-    auto res = m_workers[next_worker].create_user(username);
+    worker_locks[curr_worker].lock();
+    auto res = m_workers[curr_worker].create_user(username);
+    worker_locks[curr_worker].unlock();
     std::cout << "load_balancer:\t create_user() b " << username << " "
               << duration_cast<microseconds>(
                      system_clock::now().time_since_epoch())
@@ -125,8 +128,11 @@ public:
               << std::endl;
     next_worker_lock.lock();
     next_worker = (next_worker + 1) % m_workers.size();
+    auto curr_worker = next_worker;
     next_worker_lock.unlock();
-    auto res = m_workers[next_worker].delete_user(username);
+    worker_locks[curr_worker].lock();
+    auto res = m_workers[curr_worker].delete_user(username);
+    worker_locks[curr_worker].unlock();
     std::cout << "load_balancer:\t delete_user() b " << username << " "
               << duration_cast<microseconds>(
                      system_clock::now().time_since_epoch())
@@ -198,6 +204,7 @@ private:
   std::mutex next_worker_lock;
   int next_worker = 0;
   int num_workers = 5;
+  std::mutex worker_locks[5];
   std::vector<workerClient> m_workers;
   std::vector<std::shared_ptr<apache::thrift::transport::TTransport>>
       transports;

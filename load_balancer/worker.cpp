@@ -177,33 +177,35 @@ public:
   }
 
   bool create_user(const std::string &username) override {
-    // std::cout << "worker:\t create_user() a " << username << " "
-    //           << duration_cast<microseconds>(
-    //                  system_clock::now().time_since_epoch())
-    //                  .count()
-    //           << std::endl;
-    auto res = m_users->create_user(username);
-    // std::cout << "worker:\t create_user() b " << username << " "
-    //           << duration_cast<microseconds>(
-    //                  system_clock::now().time_since_epoch())
-    //                  .count()
-    //           << std::endl;
-    return res;
+    std::cout << "worker:\t create_user() a " << username << " "
+              << duration_cast<microseconds>(
+                     system_clock::now().time_since_epoch())
+                     .count()
+              << std::endl;
+    //auto res = m_users->create_user(username);
+    std::cout << "worker:\t create_user() b " << username << " "
+              << duration_cast<microseconds>(
+                     system_clock::now().time_since_epoch())
+                     .count()
+              << std::endl;
+    //return res;
+    return true;
   }
 
   bool delete_user(const std::string &username) override {
-    // std::cout << "worker:\t delete_user() a " << username << " "
-    //           << duration_cast<microseconds>(
-    //                  system_clock::now().time_since_epoch())
-    //                  .count()
-    //           << std::endl;
-    auto res = m_users->delete_user(username);
-    // std::cout << "worker:\t delete_user() b " << username << " "
-    //           << duration_cast<microseconds>(
-    //                  system_clock::now().time_since_epoch())
-    //                  .count()
-    //           << std::endl;
-    return res;
+    std::cout << "worker:\t delete_user() a " << username << " "
+              << duration_cast<microseconds>(
+                     system_clock::now().time_since_epoch())
+                     .count()
+              << std::endl;
+    //auto res = m_users->delete_user(username);
+    std::cout << "worker:\t delete_user() b " << username << " "
+              << duration_cast<microseconds>(
+                     system_clock::now().time_since_epoch())
+                     .count()
+              << std::endl;
+    //return res;
+    return true;
   }
 
   void get_user(User &_return, const std::string &username) override {

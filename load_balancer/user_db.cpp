@@ -43,11 +43,11 @@ public:
   }
 
   bool create_user(const std::string &username) override {
-    // std::cout << "user_db:\t create_user() a " << username << " "
-    //           << duration_cast<microseconds>(
-    //                  system_clock::now().time_since_epoch())
-    //                  .count()
-    //           << std::endl;
+    std::cout << "user_db:\t create_user() a " << username << " "
+              << duration_cast<microseconds>(
+                     system_clock::now().time_since_epoch())
+                     .count()
+              << std::endl;
     std::string u = std::string(username);
 
     db_lock.lock();
@@ -56,20 +56,20 @@ public:
       User new_user{};
       new_user.username = u;
       users.emplace(u, new_user);
-      //   std::cout << "user_db:\t create_user() b " << username << " "
-      //             << duration_cast<microseconds>(
-      //                    system_clock::now().time_since_epoch())
-      //                    .count()
-      //             << std::endl;
+      std::cout << "user_db:\t create_user() b " << username << " "
+                << duration_cast<microseconds>(
+                       system_clock::now().time_since_epoch())
+                       .count()
+                << std::endl;
       db_lock.unlock();
       return true;
     }
 
-    // std::cout << "user_db:\t create_user() b " << username << " "
-    //           << duration_cast<microseconds>(
-    //                  system_clock::now().time_since_epoch())
-    //                  .count()
-    //           << std::endl;
+    std::cout << "user_db:\t create_user() b " << username << " "
+              << duration_cast<microseconds>(
+                     system_clock::now().time_since_epoch())
+                     .count()
+              << std::endl;
     db_lock.unlock();
     return false;
   }

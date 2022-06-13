@@ -31,7 +31,7 @@ def run_client():
         # Connect!
         transport.open()
 
-        num_users = 100
+        num_users = 1000
 
         # Generate random usernames
         letters = string.ascii_letters
@@ -47,7 +47,7 @@ def run_client():
         finish = time.time()
 
         # Record diff in microseconds
-        diff = (finish - start) * 1000.0
+        diff = (finish - start) * 1000000.0
         print(diff)
 
         transport.close()

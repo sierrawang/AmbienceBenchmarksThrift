@@ -1,5 +1,6 @@
 import string
 import random
+import time
 
 import sys
 sys.path.append('../gen-py')
@@ -15,7 +16,7 @@ from thrift.protocol import TBinaryProtocol
 
 
 def sequence1(num_users, num_active_users, num_follow, num_posts):
-    print("sequence1", num_users, num_follow, num_posts)
+    #print("sequence1", num_users, num_follow, num_posts)
 
     # Make socket
     transport = TSocket.TSocket('172.18.0.4', 9089)
@@ -46,42 +47,47 @@ def sequence1(num_users, num_active_users, num_follow, num_posts):
         posts.append(s)
 
     # Test create user
-    print("Testing create_user")
+    start = time.time()
+    #print("Testing create_user")
     for u in usernames:
         m_load_balancer.create_user(u)
     
     # Test follow
-    print("Testing follow")
+    #print("Testing follow")
     for i in range(num_active_users):
         for j in range(num_follow):
             m_load_balancer.follow(usernames[i], usernames[(i + j + 1) % num_users])
 
     # Test post tweet
-    print("Testing post_tweet")
+    #print("Testing post_tweet")
     for i in range(num_active_users):
         for post in posts:
             m_load_balancer.post_tweet(usernames[i], post) 
 
     # Test unfollow
-    print("Testing unfollow")
+    #print("Testing unfollow")
     for i in range(num_active_users):
         for j in range(num_follow):
             m_load_balancer.unfollow(usernames[i], usernames[(i + j + 1) % num_users])
 
     # Test delete_user
-    print("Testing delete_user")
+    #print("Testing delete_user")
     for u in usernames:
         m_load_balancer.delete_user(u)
+
+    end = time.time()
+    print((end - start) * 1000000.0)
 
     # Close!
     transport.close()
 
 def start():
-    num_users = 10000
-    num_active_users = 500
+    num_users = 1000
+    num_active_users = 50
     num_follow = 20
     num_posts = 20
-    sequence1(num_users, num_active_users, num_follow, num_posts)
+    for i in range(100):
+        sequence1(num_users, num_active_users, num_follow, num_posts)
 
 start()
 

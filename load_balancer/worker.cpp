@@ -285,7 +285,7 @@ public:
 
 int main(int argc, char **argv) {
   if (argc < 2) {
-    std::cout << "Usage: ./worker {0-7}" << std::endl;
+    // std::cout << "Usage: ./worker {0-7}" << std::endl;
     return 1;
   }
 
@@ -298,7 +298,7 @@ int main(int argc, char **argv) {
       std::make_shared<apache::thrift::transport::TBufferedTransportFactory>(),
       std::make_shared<apache::thrift::protocol::TBinaryProtocolFactory>());
 
-  std::cout << "Starting worker on port " << port << std::endl;
+  // std::cout << "Starting worker on port " << port << std::endl;
   server.serve();
   return 0;
 }

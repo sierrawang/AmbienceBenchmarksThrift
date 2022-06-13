@@ -105,8 +105,8 @@ int main() {
       std::make_shared<apache::thrift::transport::TBufferedTransportFactory>(),
       std::make_shared<apache::thrift::protocol::TBinaryProtocolFactory>());
 
-  std::cout << "Starting read_endpoint on port " << READ_ENDPT_PORT
-            << std::endl;
+  // std::cout << "Starting read_endpoint on port " << READ_ENDPT_PORT
+  //           << std::endl;
   server.serve();
   return 0;
 }

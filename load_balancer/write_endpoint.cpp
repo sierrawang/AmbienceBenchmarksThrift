@@ -43,7 +43,7 @@ public:
     uint64_t after = 0;
     uint64_t time = 0;
 
-    std::cout << "test_create_user sequence1" << std::endl;
+    // std::cout << "test_create_user sequence1" << std::endl;
     for (auto i = 0; i < num_users; i++) {
       auto username = std::to_string(i);
       before =
@@ -54,10 +54,10 @@ public:
           duration_cast<microseconds>(system_clock::now().time_since_epoch())
               .count();
       time = after - before;
-      std::cout << "test_create_user " << i << " " << time << std::endl;
+      std::cout << "create_user " << time << std::endl;
     }
 
-    std::cout << "test_follow sequence1" << std::endl;
+    // std::cout << "test_follow sequence1" << std::endl;
     for (auto i = 0; i < num_active_users; i++) {
       auto follower = std::to_string(i);
       for (auto j = 0; j < num_follow; j++) {
@@ -70,12 +70,11 @@ public:
             duration_cast<microseconds>(system_clock::now().time_since_epoch())
                 .count();
         time = after - before;
-        std::cout << "test_follow"
-                  << " " << i << " " << j << " " << time << std::endl;
+        std::cout << "follow " << time << std::endl;
       }
     }
 
-    std::cout << "post_tweet sequence1" << std::endl;
+    // std::cout << "post_tweet sequence1" << std::endl;
     for (auto i = 0; i < num_active_users; i++) {
       auto username = std::to_string(i);
       for (auto j = 0; j < num_post; j++) {
@@ -88,12 +87,11 @@ public:
             duration_cast<microseconds>(system_clock::now().time_since_epoch())
                 .count();
         time = after - before;
-        std::cout << "post_tweet"
-                  << " " << i << " " << j << " " << time << std::endl;
+        std::cout << "post_tweet " << time << std::endl;
       }
     }
 
-    std::cout << "test_unfollow sequence1" << std::endl;
+    // std::cout << "test_unfollow sequence1" << std::endl;
     for (auto i = 0; i < num_active_users; i++) {
       auto follower = std::to_string(i);
       for (auto j = 0; j < num_follow; j++) {
@@ -106,12 +104,11 @@ public:
             duration_cast<microseconds>(system_clock::now().time_since_epoch())
                 .count();
         time = after - before;
-        std::cout << "test_unfollow"
-                  << " " << i << " " << j << " " << time << std::endl;
+        std::cout << "test_unfollow " << time << std::endl;
       }
     }
 
-    std::cout << "test_delete_user sequence1" << std::endl;
+    // std::cout << "test_delete_user sequence1" << std::endl;
     for (auto i = 0; i < num_users; i++) {
       auto username = std::to_string(i);
       before =
@@ -122,15 +119,14 @@ public:
           duration_cast<microseconds>(system_clock::now().time_since_epoch())
               .count();
       time = after - before;
-      std::cout << "test_delete_user"
-                << " " << i << " " << time << std::endl;
+      std::cout << "test_delete_user " << time << std::endl;
     }
     transport->close();
     return true;
   }
 
   bool start() override {
-    sequence1(1000, 50, 20, 20);
+    sequence1(10000, 500, 20, 20);
     return true;
   }
 };

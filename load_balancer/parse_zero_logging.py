@@ -1,6 +1,9 @@
 import statistics
 
 def parse_section(method_name, line, it):
+    # Throw away first result
+    line = next(it)
+
     while method_name not in line:
         print("ERROR")
         return [], ""

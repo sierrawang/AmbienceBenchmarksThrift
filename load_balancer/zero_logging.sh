@@ -18,6 +18,6 @@ sleep 5
 
 python3 zero_logging_test.py > linux_zero_logging.txt
 
-python3 parse_zero_logging.py > ambience_zero_logging_parsed.txt
+python3 parse_zero_logging.py > linux_zero_logging_parsed.txt
 
 echo DONE!

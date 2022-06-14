@@ -27,7 +27,7 @@ def parse(method_name, results):
 
 def main():
     # Open the results file
-    f = open('ambience_write_endpoint_output.txt')
+    f = open('linux_write_endpoint_output.txt')
 
     # Grab the lines
     lines = f.readlines()

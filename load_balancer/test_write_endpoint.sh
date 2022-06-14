@@ -3,6 +3,7 @@
 docker rm -f worker_con
 docker rm -f db_con
 docker rm -f read_edpt
+docker rm -f write_edpt
 
 docker run -p 3003:3000 --net mynet --name read_edpt -v /home/ubuntu/AmbienceBenchmarksThrift:/root/app thrift_img /bin/bash load_balancer/run_read_edpt.sh &
 
@@ -22,6 +23,6 @@ sleep 5
 
 python3 test_write_endpoint.py
 
-python3 parse_write_endpoint.py > ambience_write_endpoint_parsed.txt
+python3 parse_write_endpoint.py > linux_write_endpoint_parsed.txt
 
 echo DONE!

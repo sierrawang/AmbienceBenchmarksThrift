@@ -1,12 +1,11 @@
 import statistics
+import sys
 
 def parse_section(method_name, line, it):
     # Throw away first result
     line = next(it)
 
-    while method_name not in line:
-        print("ERROR")
-        return [], ""
+    assert(method_name in line)
 
     results = []
     while method_name in line:
@@ -19,15 +18,15 @@ def parse_section(method_name, line, it):
 
 def parse(method_name, results):
     print("Results for " + method_name + ":")
-    print("\tMean: " + str(statistics.fmean(results)))
+    print("\tMean: " + str(statistics.mean(results)))
     print("\tStandard Deviation: " + str(statistics.stdev(results)))
     print("\tVariance: " + str(statistics.variance(results)))
-    print("\tCoefficient of Variation: " + str(statistics.stdev(results)/statistics.fmean(results)))
+    print("\tCoefficient of Variation: " + str(statistics.stdev(results)/statistics.mean(results)))
     print()
 
 def main():
     # Open the results file
-    f = open('linux_zero_logging.txt')
+    f = open(sys.argv[1])
 
     # Grab the lines
     lines = f.readlines()
@@ -40,6 +39,10 @@ def main():
     post_tweet, line = parse_section("post_tweet", line, it)
     unfollow, line = parse_section("unfollow", line, it)
     delete_user, line = parse_section("delete_user", line, it)
+
+    # Quick sanity check
+    assert(len(delete_user) > 0)
+    assert(len(delete_user) == len(post_tweet))
 
     # Parse the results
     parse("create_user()", create_user)

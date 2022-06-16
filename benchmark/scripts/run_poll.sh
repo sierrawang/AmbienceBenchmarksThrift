@@ -2,4 +2,4 @@
 
 cd poll
 
-./poll > ../benchmarks/results/poll_output.txt
+./poll > ../benchmark/results/poll_output.txt

@@ -26,6 +26,7 @@ def main():
 
     # Check the iterations
     line = next(it)
+    print(line)
     assert("num_iterations" in line)
     iterations = int(line.split()[-1])
 
@@ -46,7 +47,7 @@ def main():
     assert(len(call_times) == len(return_times))
     assert(len(call_times) == iterations - 1)
 
-    summarize_results(0,call_times,return_times)
+    summarize_results(call_times,return_times)
 
     # Output the results in spreadsheet format
     print("call_times\treturn_times")

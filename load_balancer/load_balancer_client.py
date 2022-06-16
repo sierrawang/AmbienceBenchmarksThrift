@@ -13,13 +13,11 @@ from thrift.transport import TSocket
 from thrift.transport import TTransport
 from thrift.protocol import TBinaryProtocol
 
-
-
 def sequence1(num_users, num_active_users, num_follow, num_posts):
-    #print("sequence1", num_users, num_follow, num_posts)
+    conversion_factor = 1000000.0
 
     # Make socket
-    transport = TSocket.TSocket('172.18.0.4', 9089)
+    transport = TSocket.TSocket('build.a6e.org', 9089)
 
     # Buffering is critical. Raw sockets are very slow
     transport = TTransport.TBufferedTransport(transport)
@@ -39,7 +37,7 @@ def sequence1(num_users, num_active_users, num_follow, num_posts):
     for n in range(num_users):
         s = ''.join(random.choice(letters) for i in range(10))
         usernames.append(s)
-    
+
     # Generate random posts
     posts = []
     for p in range(num_posts):
@@ -47,50 +45,56 @@ def sequence1(num_users, num_active_users, num_follow, num_posts):
         posts.append(s)
 
     # Test create user
-    start = time.time()
-    #print("Testing create_user")
     for u in usernames:
+        before = time.time()
         m_load_balancer.create_user(u)
-    
+        after = time.time()
+        t = (after - before) * conversion_factor
+        print("create_user " + str(t))
+
     # Test follow
-    #print("Testing follow")
     for i in range(num_active_users):
         for j in range(num_follow):
+            before = time.time()
             m_load_balancer.follow(usernames[i], usernames[(i + j + 1) % num_users])
+            after = time.time()
+            t = (after - before) * conversion_factor
+            print("follow " + str(t))
 
     # Test post tweet
-    #print("Testing post_tweet")
     for i in range(num_active_users):
         for post in posts:
-            m_load_balancer.post_tweet(usernames[i], post) 
+            before = time.time()
+            m_load_balancer.post_tweet(usernames[i], post)
+            after = time.time()
+            t = (after - before) * conversion_factor
+            print("post_tweet " + str(t)) 
 
     # Test unfollow
-    #print("Testing unfollow")
     for i in range(num_active_users):
         for j in range(num_follow):
+            before = time.time()
             m_load_balancer.unfollow(usernames[i], usernames[(i + j + 1) % num_users])
+            after = time.time()
+            t = (after - before) * conversion_factor
+            print("unfollow " + str(t))
 
     # Test delete_user
-    #print("Testing delete_user")
     for u in usernames:
+        before = time.time()
         m_load_balancer.delete_user(u)
-
-    end = time.time()
-    print((end - start) * 1000000.0)
+        after = time.time()
+        t = (after - before) * conversion_factor
+        print("delete_user " + str(t))
 
     # Close!
     transport.close()
 
 def start():
-    num_users = 1000
-    num_active_users = 50
+    num_users = 10000
+    num_active_users = 500
     num_follow = 20
     num_posts = 20
-    for i in range(100):
-        sequence1(num_users, num_active_users, num_follow, num_posts)
+    sequence1(num_users, num_active_users, num_follow, num_posts)
 
 start()
-
-# m_load_balancer.create_user(username="1")
-# m_load_balancer.create_user(username="2")
-# m_load_balancer.follow(follower='a', followee='b')

@@ -3,6 +3,10 @@
 # Kill any running containers
 docker rm -f $(docker ps -a)
 
+# Compile everything in a container then kill it
+docker run -p 3003:3000 --net mynet --name make_load_balancer_con -v /home/ubuntu/AmbienceBenchmarksThrift:/root/app -it thrift_img /bin/bash benchmark/scripts/run_make_load_balancer.sh
+docker rm -f make_load_balancer_con
+
 # Start the containers one by one
 docker run -p 3003:3000 --net mynet --name read_edpt -v /home/ubuntu/AmbienceBenchmarksThrift:/root/app thrift_img /bin/bash load_balancer/run_read_edpt.sh &
 sleep 15

@@ -10,9 +10,10 @@ qemu-system-x86_64 \
  -m 4G \
  -nographic \
  -device virtio-net-pci,netdev=net0 \
- -netdev user,id=net0,hostfwd=tcp::2222-:22 \
+ -netdev user,id=net0,hostfwd=tcp::2222-:22,hostfwd=tcp::9093-:9093,hostfwd=tcp::9094-:9094 \
  -drive if=virtio,format=qcow2,file=/home/sierra/ubuntu-20.04-server-cloudimg-amd64.img \
- -drive if=virtio,format=raw,file=/home/sierra/seed.img > ../results/latency_across_container_log.txt &
+ -drive if=virtio,format=raw,file=/home/sierra/seed.img \
+  > ../results/latency_across_container_log.txt &
 
 # For now, manually log into the ubuntu machine
 # TO DO - fix this hack to actually wait until ready to log in

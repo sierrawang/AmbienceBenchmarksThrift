@@ -2,4 +2,4 @@
 
 cd poll
 
-./poll > ../benchmark/results/poll_output.txt
+./poll > ../benchmark/results/latency_across_container_output.txt

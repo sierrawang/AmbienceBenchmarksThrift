@@ -1,5 +1,6 @@
 #!/bin/bash
 
+<<<<<<< HEAD
 # This bash script starts the ubuntu vm
 
 killall qemu-system-x86_64

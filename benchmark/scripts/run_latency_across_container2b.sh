@@ -3,15 +3,15 @@
 # Kill any running containers
 docker rm -f $(docker ps -a)
 
-docker run -p 3003:3000 --net mynet --name make_poll_con -v /home/ubuntu/AmbienceBenchmarksThrift:/root/app thrift_img /bin/bash run_make_poll
-
-echo yay
+# Compile everything in a container then kill it
+docker run -p 3003:3000 --net mynet --name make_poll_con -v /home/ubuntu/AmbienceBenchmarksThrift:/root/app -it thrift_img /bin/bash benchmark/scripts/run_make_poll.sh
+docker rm -f make_poll_con
 
 # Start the containers one by one
-docker run -p 3003:3000 --net mynet --name poll_con -v /home/ubuntu/AmbienceBenchmarksThrift:/root/app thrift_img /bin/bash poll/run_poll.sh &
+docker run -p 3003:3000 --net mynet --name poll_con -v /home/ubuntu/AmbienceBenchmarksThrift:/root/app thrift_img /bin/bash benchmark/scripts/run_poll.sh &
 sleep 5
 
-docker run -p 3000:3000 --net mynet --name agent_con -v /home/ubuntu/AmbienceBenchmarksThrift:/root/app thrift_img /bin/bash poll/run_agent.sh &
+docker run -p 3000:3000 --net mynet --name agent_con -v /home/ubuntu/AmbienceBenchmarksThrift:/root/app thrift_img /bin/bash benchmark/scripts/run_agent.sh &
 sleep 5
 
 echo DONE!

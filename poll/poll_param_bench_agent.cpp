@@ -42,7 +42,7 @@ class agentHandler : public agentIf {
         std::shared_ptr<TProtocol> protocol(new TBinaryProtocol(transport));
         pollClient client(protocol);
 
-	auto num_iterations = 100000;
+	    auto num_iterations = 100000;
         cout << "Poll bench agent, size: " << param << endl;
         
         auto i = 0;
@@ -61,17 +61,13 @@ class agentHandler : public agentIf {
         uint64_t return_sq_sum = 0;
 
         std::vector<int64_t> data(param);
-        cout << "data.size:" << data.size() << endl;
+        cout << "data.size: " << data.size() << endl;
 
-	cout << "Running iterations: " << num_iterations << endl;
+	    cout << "Running iterations: " << num_iterations << endl;
 
         transport->open();
         begin = duration_cast<microseconds>(system_clock::now().time_since_epoch()).count();
         for (i = 0; i < num_iterations; i++) {
-		if (i % 100 == 0) {
-			cout << "iteration: " << i << endl;
-		}
-
             // Call another service that simply returns a timestamp
             before = duration_cast<microseconds>(system_clock::now().time_since_epoch()).count();
             stamp = client.fn_with_param(data);
@@ -81,11 +77,13 @@ class agentHandler : public agentIf {
             call_time = stamp - before;
             call_sum += call_time;
             call_sq_sum += call_time * call_time;
+            cout << "call_time " << call_time << endl;
 
             // Update the return time variables
             return_time = after - stamp;
             return_sum += return_time;
             return_sq_sum += return_time * return_time;
+            cout << "return_time " << return_time << endl;
         }
         end = duration_cast<microseconds>(system_clock::now().time_since_epoch()).count();
         transport->close();
@@ -103,16 +101,22 @@ class agentHandler : public agentIf {
 
 class agentCloneFactory : virtual public agentIfFactory {
     public:
+    agentCloneFactory() {
+        handler = new agentHandler;
+    }
+
     ~agentCloneFactory() override = default;
     
     agentIf* getHandler(const ::apache::thrift::TConnectionInfo& connInfo) override {
-        std::shared_ptr<TSocket> sock = std::dynamic_pointer_cast<TSocket>(connInfo.transport);
-        return new agentHandler;
+        std::dynamic_pointer_cast<TSocket>(connInfo.transport);
+        return handler;
     }
 
     void releaseHandler(agentIf* handler) override {
-        delete handler;
+        // delete handler;
     }
+
+    agentIf* handler;
 };
 
 int main() {

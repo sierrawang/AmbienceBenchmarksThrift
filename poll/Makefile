@@ -16,4 +16,4 @@ test_poll_param_agent: test_poll_param_bench_agent.cpp
 	g++ ../gen-cpp/poll.cpp ../gen-cpp/agent_types.cpp ../gen-cpp/agent.cpp test_poll_param_bench_agent.cpp -o test_poll_param_agent -lthrift
 
 clean:
-	rm -rf poll poll_bench_agent poll_param_bench_agent test_poll_agent test_poll_param_agent
+	rm poll poll_bench_agent poll_param_bench_agent test_poll_agent test_poll_param_agent

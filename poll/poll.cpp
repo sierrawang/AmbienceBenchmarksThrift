@@ -47,17 +47,22 @@ class pollHandler : public pollIf {
 
 class pollCloneFactory : virtual public pollIfFactory {
     public:
+    pollCloneFactory() {
+        handler = new pollHandler;
+    }
     ~pollCloneFactory() override = default;
     
     pollIf* getHandler(const ::apache::thrift::TConnectionInfo& connInfo) override
     {
-        std::shared_ptr<::apache::thrift::transport::TSocket> sock = std::dynamic_pointer_cast<::apache::thrift::transport::TSocket>(connInfo.transport);
-        return new pollHandler;
+        std::dynamic_pointer_cast<::apache::thrift::transport::TSocket>(connInfo.transport);
+        return handler;
     }
 
     void releaseHandler(pollIf* handler) override {
-        delete handler;
+        // delete handler;
     }
+
+    pollIf* handler;
 };
 
 int main() {

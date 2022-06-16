@@ -42,14 +42,14 @@ def parse_poll_param_bench_agent(it, line):
 
 def summarize_results(buffer_size, call_times, return_times):
     print("Results for buffer size\t" + str(buffer_size) + ":")
-    print("Call time Mean:\t" + str(statistics.fmean(call_times)) + 
-        "\tReturn time Mean:\t" + str(statistics.fmean(return_times)))
+    print("Call time Mean:\t" + str(statistics.mean(call_times)) + 
+        "\tReturn time Mean:\t" + str(statistics.mean(return_times)))
     print("Call time Standard Deviation:\t" + str(statistics.stdev(call_times)) + 
         "\tReturn time Standard Deviation:\t" + str(statistics.stdev(return_times)))
     print("Call time Variance:\t" + str(statistics.variance(call_times)) + 
         "\tReturn time Variance:\t" + str(statistics.variance(return_times)))
-    print("Call time Coefficient of Variation:\t" + str(statistics.stdev(call_times)/statistics.fmean(call_times)) +
-        "\tReturn time Coefficient of Variation:\t" + str(statistics.stdev(call_times)/statistics.fmean(return_times)))
+    print("Call time Coefficient of Variation:\t" + str(statistics.stdev(call_times)/statistics.mean(call_times)) +
+        "\tReturn time Coefficient of Variation:\t" + str(statistics.stdev(call_times)/statistics.mean(return_times)))
     print()
 
 def main():

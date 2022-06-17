@@ -15,7 +15,7 @@ from thrift.protocol import TBinaryProtocol
 
 
 # Make socket
-transport = TSocket.TSocket('172.18.0.5', 9121)
+transport = TSocket.TSocket('build.a6e.org', 9121)
 
 # Buffering is critical. Raw sockets are very slow
 transport = TTransport.TBufferedTransport(transport)

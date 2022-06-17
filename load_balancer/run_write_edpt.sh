@@ -2,4 +2,4 @@
 
 cd load_balancer
 
-./write_endpoint > linux_write_endpoint_output.txt
+./write_endpoint > ../benchmark/results/BEPS_write_endpoint_output.txt

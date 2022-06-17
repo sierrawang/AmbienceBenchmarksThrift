@@ -14,46 +14,46 @@ from thrift.transport import TTransport
 from thrift.protocol import TBinaryProtocol
 
 # Hammer the load_balancer
-def run_client():
-    try:
-        # Make socket
-        transport = TSocket.TSocket('172.18.0.4', 9089)
+def run_client(num_clients):
+    # Make socket
+    transport = TSocket.TSocket('build.a6e.org', 9089)
 
-        # Buffering is critical. Raw sockets are very slow
-        transport = TTransport.TBufferedTransport(transport)
+    # Buffering is critical. Raw sockets are very slow
+    transport = TTransport.TBufferedTransport(transport)
 
-        # Wrap in a protocol
-        protocol = TBinaryProtocol.TBinaryProtocol(transport)
+    # Wrap in a protocol
+    protocol = TBinaryProtocol.TBinaryProtocol(transport)
 
-        # Create a client to use the protocol encoder
-        m_load_balancer = worker.Client(protocol)
+    # Create a client to use the protocol encoder
+    m_load_balancer = worker.Client(protocol)
 
-        # Connect!
-        transport.open()
+    # Connect!
+    transport.open()
 
-        num_users = 1000
+    num_users = 100
 
-        # Generate random usernames
-        letters = string.ascii_letters
-        usernames = []
-        for n in range(num_users):
-            s = ''.join(random.choice(letters) for i in range(10))
-            usernames.append(s)
+    # Generate random usernames
+    letters = string.ascii_letters
+    usernames = []
+    for n in range(num_users):
+        s = ''.join(random.choice(letters) for i in range(10))
+        usernames.append(s)
 
-        start = time.time()
-        for u in usernames:
-            m_load_balancer.create_user(u)
-            m_load_balancer.delete_user(u)
-        finish = time.time()
+    start = time.time()
+    for i in range(num_users - 1):
+        j = (i + 1) % num_users
+        m_load_balancer.create_user(usernames[i])
+        m_load_balancer.create_user(usernames[j])
+        m_load_balancer.follow(usernames[i], usernames[j])
+        m_load_balancer.unfollow(usernames[i], usernames[j])
+        m_load_balancer.delete_user(usernames[i])
+        m_load_balancer.delete_user(usernames[j])
+    finish = time.time()
 
-        # Record diff in microseconds
-        diff = (finish - start) * 1000000.0
-        print(diff)
+    # Record diff in microseconds
+    diff = (finish - start) * 1000000.0
+    print(str(num_clients) + "\t" + str(diff))
 
-        transport.close()
-    
-    except Exception:
-        print("Client failed")
     exit()
 
 def start_clients(client_procs):
@@ -61,16 +61,29 @@ def start_clients(client_procs):
     for _ in range(client_procs):
         pi = os.fork()
         if (pi == 0):
-            run_client()
-
+            run_client(client_procs)
     for _ in range(client_procs):
         os.wait()
 
 def main():
-    if (len(sys.argv) < 2):
-        print("usage: python3 test_capacity.py num_procs")
-        exit()
-
-    start_clients(int(sys.argv[1]))
+    print("Starting test capacity")
+    # Run the different numbers of clients several times in different orders
+    for i in range(5):
+        start_clients(1)
+        start_clients(10)
+        start_clients(15)
+        start_clients(80)
+        start_clients(5)
+        start_clients(20)
+        start_clients(100)
+        start_clients(5)
+        start_clients(100)
+        start_clients(15)
+        start_clients(50)
+        start_clients(10)
+        start_clients(1)
+        start_clients(50)
+        start_clients(20)
+        start_clients(80)
 
 main()

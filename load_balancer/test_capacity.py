@@ -68,11 +68,17 @@ def start_clients(client_procs):
 def main():
     # Run the different numbers of clients several times in different orders
     start_clients(1)
-    for i in range(5):
+    for i in range(25):
         start_clients(10)
         start_clients(1)
         start_clients(15)
         start_clients(80)
+        start_clients(125)
+        start_clients(150)
+        start_clients(200)
+        start_clients(300)
+        start_clients(400)
+        start_clients(500)
         start_clients(5)
         start_clients(20)
         start_clients(100)
@@ -88,5 +94,8 @@ def main():
         start_clients(125)
         start_clients(150)
         start_clients(200)
+        start_clients(300)
+        start_clients(400)
+        start_clients(500)
 
 main()

@@ -14,7 +14,7 @@ sleep 15
 docker run -p 3000:3000 --net mynet --name db_con -v /home/ubuntu/AmbienceBenchmarksThrift:/root/app thrift_img /bin/bash load_balancer/run_db.sh &
 sleep 5
 
-docker run -p 3001:3000 -p --net mynet --name worker_con -v /home/ubuntu/AmbienceBenchmarksThrift:/root/app thrift_img /bin/bash load_balancer/run_worker.sh &
+docker run -p 3001:3000 --net mynet --name worker_con -v /home/ubuntu/AmbienceBenchmarksThrift:/root/app thrift_img /bin/bash load_balancer/run_worker.sh &
 sleep 5
 
 docker run -p 3002:3000 -p 9121:9121 --net mynet --name write_edpt -v /home/ubuntu/AmbienceBenchmarksThrift:/root/app thrift_img /bin/bash load_balancer/run_write_edpt.sh &

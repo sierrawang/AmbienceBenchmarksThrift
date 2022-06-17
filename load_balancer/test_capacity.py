@@ -66,11 +66,11 @@ def start_clients(client_procs):
         os.wait()
 
 def main():
-    print("Starting test capacity")
     # Run the different numbers of clients several times in different orders
+    start_clients(1)
     for i in range(5):
-        start_clients(1)
         start_clients(10)
+        start_clients(1)
         start_clients(15)
         start_clients(80)
         start_clients(5)

@@ -27,7 +27,7 @@ def main():
 
     for num_clients in sorted(m.keys()):
         results = m[num_clients]
-        print(f'{str(statistics.mean(results))}\t' + 
+        print(f'{str(num_clients)}\t{str(statistics.mean(results))}\t' + 
             f'{str(statistics.stdev(results))}\t' + 
             f'{str(statistics.variance(results))}\t' + 
             f'{str(statistics.stdev(results)/statistics.mean(results))}')

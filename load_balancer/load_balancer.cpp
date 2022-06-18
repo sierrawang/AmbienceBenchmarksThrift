@@ -44,12 +44,11 @@ public:
 
   bool post_tweet(const std::string &username,
                   const std::string &tweet) override {
-//     std::cout << "load_balancer:\t post_tweet() a " << username << " " << tweet
-//               << " "
-//               << duration_cast<microseconds>(
-//                      system_clock::now().time_since_epoch())
-//                      .count()
-//               << std::endl;
+    #ifdef TIMESTAMP_LOGGING
+      auto before = duration_cast<microseconds>(
+                    system_clock::now().time_since_epoch())
+                    .count();
+    #endif
     next_worker_lock.lock();
     next_worker = (next_worker + 1) % m_workers.size();
     auto curr_worker = next_worker;
@@ -57,22 +56,22 @@ public:
     worker_locks[curr_worker].lock();
     auto res = m_workers[curr_worker].post_tweet(username, tweet);
     worker_locks[curr_worker].unlock();
-//     std::cout << "load_balancer:\t post_tweet() b " << username << " " << tweet
-//               << " "
-//               << duration_cast<microseconds>(
-//                      system_clock::now().time_since_epoch())
-//                      .count()
-//               << std::endl;
+    #ifdef TIMESTAMP_LOGGING
+      auto after = duration_cast<microseconds>(
+                  system_clock::now().time_since_epoch())
+                  .count();
+      std::cout << "post_tweet " << after - before << std::endl;
+    #endif
     return res;
   }
 
   void get_user_tweets(std::vector<Tweet> &_return,
                        const std::string &username) override {
-//     std::cout << "load_balancer:\t get_user_tweets() a " << username << " "
-//               << duration_cast<microseconds>(
-//                      system_clock::now().time_since_epoch())
-//                      .count()
-//               << std::endl;
+    #ifdef TIMESTAMP_LOGGING
+      auto before = duration_cast<microseconds>(
+                    system_clock::now().time_since_epoch())
+                    .count();
+    #endif
     next_worker_lock.lock();
     next_worker = (next_worker + 1) % m_workers.size();
     auto curr_worker = next_worker;
@@ -80,20 +79,21 @@ public:
     worker_locks[curr_worker].lock();
     m_workers[curr_worker].get_user_tweets(_return, username);
     worker_locks[curr_worker].unlock();
-//     std::cout << "load_balancer:\t get_user_tweets() b " << username << " "
-//               << duration_cast<microseconds>(
-//                      system_clock::now().time_since_epoch())
-//                      .count()
-//               << std::endl;
+    #ifdef TIMESTAMP_LOGGING
+      auto after = duration_cast<microseconds>(
+                  system_clock::now().time_since_epoch())
+                  .count();
+      std::cout << "get_user_tweets " << after - before << std::endl;
+    #endif
   }
 
   void generate_feed(std::vector<Tweet> &_return,
                      const std::string &username) override {
-//     std::cout << "load_balancer:\t generate_feed() a " << username << " "
-//               << duration_cast<microseconds>(
-//                      system_clock::now().time_since_epoch())
-//                      .count()
-//               << std::endl;
+    #ifdef TIMESTAMP_LOGGING
+      auto before = duration_cast<microseconds>(
+                    system_clock::now().time_since_epoch())
+                    .count();
+    #endif
     next_worker_lock.lock();
     next_worker = (next_worker + 1) % m_workers.size();
     auto curr_worker = next_worker;
@@ -101,19 +101,20 @@ public:
     worker_locks[curr_worker].lock();
     m_workers[curr_worker].generate_feed(_return, username);
     worker_locks[curr_worker].unlock();
-//     std::cout << "load_balancer:\t generate_feed() b " << username << " "
-//               << duration_cast<microseconds>(
-//                      system_clock::now().time_since_epoch())
-//                      .count()
-//               << std::endl;
+    #ifdef TIMESTAMP_LOGGING
+      auto after = duration_cast<microseconds>(
+                  system_clock::now().time_since_epoch())
+                  .count();
+      std::cout << "generate_feed " << after - before << std::endl;
+    #endif
   }
 
   bool create_user(const std::string &username) override {
-//     std::cout << "load_balancer:\t create_user() a " << username << " "
-//               << duration_cast<microseconds>(
-//                      system_clock::now().time_since_epoch())
-//                      .count()
-//               << std::endl;
+    #ifdef TIMESTAMP_LOGGING
+      auto before = duration_cast<microseconds>(
+                    system_clock::now().time_since_epoch())
+                    .count();
+    #endif
     next_worker_lock.lock();
     next_worker = (next_worker + 1) % m_workers.size();
     auto curr_worker = next_worker;
@@ -121,20 +122,21 @@ public:
     worker_locks[curr_worker].lock();
     auto res = m_workers[curr_worker].create_user(username);
     worker_locks[curr_worker].unlock();
-//     std::cout << "load_balancer:\t create_user() b " << username << " "
-//               << duration_cast<microseconds>(
-//                      system_clock::now().time_since_epoch())
-//                      .count()
-//               << std::endl;
+    #ifdef TIMESTAMP_LOGGING
+      auto after = duration_cast<microseconds>(
+                  system_clock::now().time_since_epoch())
+                  .count();
+      std::cout << "create_user " << after - before << std::endl;
+    #endif
     return res;
   }
 
   bool delete_user(const std::string &username) override {
-//     std::cout << "load_balancer:\t delete_user() a " << username << " "
-//               << duration_cast<microseconds>(
-//                      system_clock::now().time_since_epoch())
-//                      .count()
-//               << std::endl;
+    #ifdef TIMESTAMP_LOGGING
+      auto before = duration_cast<microseconds>(
+                    system_clock::now().time_since_epoch())
+                    .count();
+    #endif
     next_worker_lock.lock();
     next_worker = (next_worker + 1) % m_workers.size();
     auto curr_worker = next_worker;
@@ -142,20 +144,21 @@ public:
     worker_locks[curr_worker].lock();
     auto res = m_workers[curr_worker].delete_user(username);
     worker_locks[curr_worker].unlock();
-//     std::cout << "load_balancer:\t delete_user() b " << username << " "
-//               << duration_cast<microseconds>(
-//                      system_clock::now().time_since_epoch())
-//                      .count()
-//               << std::endl;
+    #ifdef TIMESTAMP_LOGGING
+      auto after = duration_cast<microseconds>(
+                  system_clock::now().time_since_epoch())
+                  .count();
+      std::cout << "delete_user " << after - before << std::endl;
+    #endif
     return res;
   }
 
   void get_user(User &_return, const std::string &username) override {
-//     std::cout << "load_balancer:\t get_user() a " << username << " "
-//               << duration_cast<microseconds>(
-//                      system_clock::now().time_since_epoch())
-//                      .count()
-//               << std::endl;
+    #ifdef TIMESTAMP_LOGGING
+      auto before = duration_cast<microseconds>(
+                    system_clock::now().time_since_epoch())
+                    .count();
+    #endif
     next_worker_lock.lock();
     next_worker = (next_worker + 1) % m_workers.size();
     auto curr_worker = next_worker;
@@ -163,21 +166,21 @@ public:
     worker_locks[curr_worker].lock();
     m_workers[curr_worker].get_user(_return, username);
     worker_locks[curr_worker].unlock();
-//     std::cout << "load_balancer:\t get_user() b " << username << " "
-//               << duration_cast<microseconds>(
-//                      system_clock::now().time_since_epoch())
-//                      .count()
-//               << std::endl;
+    #ifdef TIMESTAMP_LOGGING
+      auto after = duration_cast<microseconds>(
+                  system_clock::now().time_since_epoch())
+                  .count();
+      std::cout << "get_user " << after - before << std::endl;
+    #endif
   }
 
   bool follow(const std::string &follower,
               const std::string &followee) override {
-//     std::cout << "load_balancer:\t follow() a " << follower << " " << followee
-//               << " "
-//               << duration_cast<microseconds>(
-//                      system_clock::now().time_since_epoch())
-//                      .count()
-//               << std::endl;
+    #ifdef TIMESTAMP_LOGGING
+      auto before = duration_cast<microseconds>(
+                    system_clock::now().time_since_epoch())
+                    .count();
+    #endif
     next_worker_lock.lock();
     next_worker = (next_worker + 1) % m_workers.size();
     auto curr_worker = next_worker;
@@ -185,23 +188,22 @@ public:
     worker_locks[curr_worker].lock();
     auto res = m_workers[curr_worker].follow(follower, followee);
     worker_locks[curr_worker].unlock();
-//     std::cout << "load_balancer:\t follow() b " << follower << " " << followee
-//               << " "
-//               << duration_cast<microseconds>(
-//                      system_clock::now().time_since_epoch())
-//                      .count()
-//               << std::endl;
+    #ifdef TIMESTAMP_LOGGING
+      auto after = duration_cast<microseconds>(
+                  system_clock::now().time_since_epoch())
+                  .count();
+      std::cout << "follow " << after - before << std::endl;
+    #endif
     return res;
   }
 
   bool unfollow(const std::string &follower,
                 const std::string &followee) override {
-//     std::cout << "load_balancer:\t unfollow() a " << follower << " " << followee
-//               << " "
-//               << duration_cast<microseconds>(
-//                      system_clock::now().time_since_epoch())
-//                      .count()
-//               << std::endl;
+    #ifdef TIMESTAMP_LOGGING
+      auto before = duration_cast<microseconds>(
+                    system_clock::now().time_since_epoch())
+                    .count();
+    #endif
     next_worker_lock.lock();
     next_worker = (next_worker + 1) % m_workers.size();
     auto curr_worker = next_worker;
@@ -209,12 +211,12 @@ public:
     worker_locks[curr_worker].lock();
     auto res = m_workers[curr_worker].unfollow(follower, followee);
     worker_locks[curr_worker].unlock();
-//     std::cout << "load_balancer:\t unfollow() b " << follower << " " << followee
-//               << " "
-//               << duration_cast<microseconds>(
-//                      system_clock::now().time_since_epoch())
-//                      .count()
-//               << std::endl;
+    #ifdef TIMESTAMP_LOGGING
+      auto after = duration_cast<microseconds>(
+                  system_clock::now().time_since_epoch())
+                  .count();
+      std::cout << "unfollow " << after - before << std::endl;
+    #endif
     return res;
   }
 

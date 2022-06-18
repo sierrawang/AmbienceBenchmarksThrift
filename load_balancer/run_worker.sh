@@ -9,4 +9,4 @@ done
 
 sleep 1
 
-./load_balancer > ../benchmark/results/BEPS_lb_logging_linux_output.txt
+./load_balancer > ../benchmark/results/BEPS_lb_logging_linux_server_output.txt

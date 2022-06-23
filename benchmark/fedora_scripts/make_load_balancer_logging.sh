@@ -4,4 +4,5 @@ cd load_balancer
 
 make clean
 
-make
+make -f Makefile.log
+

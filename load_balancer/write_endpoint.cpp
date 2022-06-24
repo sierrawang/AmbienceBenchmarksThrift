@@ -27,7 +27,7 @@ public:
   bool sequence1(int num_users, int num_active_users, int num_follow,
                  int num_post) {
     std::shared_ptr<apache::thrift::transport::TTransport> socket(
-        new apache::thrift::transport::TSocket("worker_con", LB_PORT));
+        new apache::thrift::transport::TSocket("10.0.1.10", LB_PORT));
     std::shared_ptr<apache::thrift::transport::TTransport> transport(
         new apache::thrift::transport::TBufferedTransport(socket));
     std::shared_ptr<apache::thrift::protocol::TProtocol> protocol(

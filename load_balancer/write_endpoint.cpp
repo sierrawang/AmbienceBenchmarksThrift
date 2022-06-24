@@ -36,9 +36,6 @@ public:
 
     transport->open();
 
-    std::cout << "sequence1 " << num_users << " " << num_follow << " "
-              << num_post << std::endl;
-
     uint64_t before = 0;
     uint64_t after = 0;
     uint64_t time = 0;
@@ -161,8 +158,6 @@ int main() {
       std::make_shared<apache::thrift::transport::TBufferedTransportFactory>(),
       std::make_shared<apache::thrift::protocol::TBinaryProtocolFactory>());
 
-  std::cout << "Starting write_endpoint on port " << WRITE_ENDPT_PORT
-            << std::endl;
   server.serve();
   return 0;
 }

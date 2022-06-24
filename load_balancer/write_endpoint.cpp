@@ -43,7 +43,7 @@ public:
         return str;
     }
 
-    tos::Task<bool> sequence1(int num_users, int num_active_users, int num_follow, int num_post) {
+    bool sequence1(int num_users, int num_active_users, int num_follow, int num_post) {
         std::shared_ptr<apache::thrift::transport::TTransport> socket(
             new apache::thrift::transport::TSocket("10.0.1.10", LB_PORT));
         std::shared_ptr<apache::thrift::transport::TTransport> transport(
@@ -124,7 +124,8 @@ public:
             std::cout << "delete_user " << t << std::endl;
         }
 
-        co_return true;
+	transport->close();
+        return true;
     }
 
   // bool sequence1(int num_users, int num_active_users, int num_follow,

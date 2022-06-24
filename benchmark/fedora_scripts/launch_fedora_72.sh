@@ -7,8 +7,6 @@ qemu-system-x86_64 \
  -nographic \
  -device virtio-net,netdev=network0,mac=66:66:66:66:66:67,host_mtu=65535 \
  -netdev tap,id=network0,ifname=tap0,script=no,downscript=no \
- -device virtio-net-pci,netdev=net0 \
- -netdev user,id=net0,hostfwd=tcp::2222-:22 \
  -drive if=virtio,format=qcow2,file=$HOME/VM/fedora_36/hdd.qcow2 \
  -cdrom $HOME/VM/fedora_36/seedci.iso
 

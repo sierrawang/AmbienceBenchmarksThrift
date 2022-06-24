@@ -17,7 +17,7 @@ docker run --net mynet --name db_con -v $HOME/AmbienceBenchmarksThrift:/root/app
 sleep 5
 
 # The output of load balancer will be written to ../benchmark/results/BEPS_lb_logging_linux_server_output.txt
-docker run -p 9089:9089 --net mynet --name worker_con -v $HOME/AmbienceBenchmarksThrift:/root/app thrift_img /bin/bash load_balancer/run_worker.sh &
+docker run -p 9089:9089 --net mynet --name worker_con -v $HOME/AmbienceBenchmarksThrift:/root/app thrift_img /bin/bash load_balancer/run_worker.sh $1 &
 sleep 5
 
 echo DONE!

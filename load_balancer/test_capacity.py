@@ -82,7 +82,4 @@ def main():
     for i in range(10):
         start_clients(500)
     
-    for i in range(5):
-        start_clients(1000)
-
 main()

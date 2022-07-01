@@ -30,7 +30,7 @@ def run_client(num_clients):
     # Connect!
     transport.open()
 
-    num_users = 100
+    num_users = 1000
 
     # Generate random usernames
     letters = string.ascii_letters

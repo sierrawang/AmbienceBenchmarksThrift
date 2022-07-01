@@ -70,16 +70,18 @@ def main():
     start_clients(1)
 
     # Run the different numbers of clients several times in different orders
-    for i in range(100):
-        start_clients(1)
-        start_clients(10)
-        start_clients(25)
-        start_clients(50)
+    # for i in range(100):
+    #     start_clients(1)
+    #     start_clients(10)
+    #     start_clients(25)
+    #     start_clients(50)
 
-    for i in range(50):
+    # for i in range(50):
+    for i in range(5):
         start_clients(100)
 
-    for i in range(10):
+    # for i in range(10):
+    for i in range(5):
         start_clients(500)
     
 main()

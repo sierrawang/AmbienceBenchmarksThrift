@@ -16,7 +16,7 @@ from thrift.protocol import TBinaryProtocol
 # Hammer the load_balancer
 def run_client(num_clients):
     # Make socket
-    transport = TSocket.TSocket('build.a6e.org', 9089)
+    transport = TSocket.TSocket('10.0.1.10', 9089)
 
     # Buffering is critical. Raw sockets are very slow
     transport = TTransport.TBufferedTransport(transport)
@@ -66,36 +66,23 @@ def start_clients(client_procs):
         os.wait()
 
 def main():
-    # Run the different numbers of clients several times in different orders
+    # Throw away run
     start_clients(1)
-    for i in range(25):
-        start_clients(10)
+
+    # Run the different numbers of clients several times in different orders
+    for i in range(100):
         start_clients(1)
-        start_clients(15)
-        start_clients(80)
-        start_clients(125)
-        start_clients(150)
-        start_clients(200)
-        start_clients(300)
-        start_clients(400)
-        start_clients(500)
-        start_clients(5)
-        start_clients(20)
-        start_clients(100)
-        start_clients(5)
-        start_clients(100)
-        start_clients(15)
-        start_clients(50)
         start_clients(10)
-        start_clients(1)
+        start_clients(25)
         start_clients(50)
-        start_clients(20)
-        start_clients(80)
-        start_clients(125)
-        start_clients(150)
-        start_clients(200)
-        start_clients(300)
-        start_clients(400)
+
+    for i in range(50):
+        start_clients(100)
+
+    for i in range(10):
         start_clients(500)
+    
+    for i in range(5):
+        start_clients(1000)
 
 main()

@@ -22,11 +22,15 @@ using std::chrono::duration_cast;
 using std::chrono::microseconds;
 using std::chrono::system_clock;
 
+std::string tweet_db_ip;
+std::string user_db_ip;
+std::string read_ip;
+
 class WorkerHandler : public workerIf {
 public:
   WorkerHandler() {
     std::shared_ptr<apache::thrift::transport::TTransport> tweet_db_socket(
-        new apache::thrift::transport::TSocket("db_con", TWEETDB_PORT));
+        new apache::thrift::transport::TSocket(tweet_db_ip, TWEETDB_PORT));
     std::shared_ptr<apache::thrift::transport::TTransport> tweet_db_transport(
         new apache::thrift::transport::TBufferedTransport(tweet_db_socket));
     std::shared_ptr<apache::thrift::protocol::TProtocol> tweet_db_protocol(
@@ -34,7 +38,7 @@ public:
     m_tweets = new tweet_dbClient(tweet_db_protocol);
 
     std::shared_ptr<apache::thrift::transport::TTransport> user_db_socket(
-        new apache::thrift::transport::TSocket("db_con", USERDB_PORT));
+        new apache::thrift::transport::TSocket(user_db_ip, USERDB_PORT));
     std::shared_ptr<apache::thrift::transport::TTransport> user_db_transport(
         new apache::thrift::transport::TBufferedTransport(user_db_socket));
     std::shared_ptr<apache::thrift::protocol::TProtocol> user_db_protocol(
@@ -42,7 +46,7 @@ public:
     m_users = new user_dbClient(user_db_protocol);
 
     std::shared_ptr<apache::thrift::transport::TTransport> read_endpoint_socket(
-        new apache::thrift::transport::TSocket("read_edpt", READ_ENDPT_PORT));
+        new apache::thrift::transport::TSocket(read_ip, READ_ENDPT_PORT));
     std::shared_ptr<apache::thrift::transport::TTransport>
         read_endpoint_transport(
             new apache::thrift::transport::TBufferedTransport(
@@ -284,10 +288,14 @@ public:
 };
 
 int main(int argc, char **argv) {
-  if (argc < 2) {
+  if (argc < 5) {
     // std::cout << "Usage: ./worker {0-7}" << std::endl;
     return 1;
   }
+
+  tweet_db_ip = argv[2];
+  user_db_ip = argv[3];
+  read_ip = argv[4];
 
   auto port = WORKER_PORT_BASE + atoi(argv[1]);
 

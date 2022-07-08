@@ -20,6 +20,8 @@ using std::chrono::duration_cast;
 using std::chrono::microseconds;
 using std::chrono::system_clock;
 
+std::string lb_ip;
+
 class write_endpointHandler : public write_endpointIf {
 public:
   write_endpointHandler() = default;
@@ -45,7 +47,7 @@ public:
 
     bool sequence1(int num_users, int num_active_users, int num_follow, int num_post) {
         std::shared_ptr<apache::thrift::transport::TTransport> socket(
-            new apache::thrift::transport::TSocket("10.0.1.10", LB_PORT));
+            new apache::thrift::transport::TSocket(lb_ip, LB_PORT));
         std::shared_ptr<apache::thrift::transport::TTransport> transport(
             new apache::thrift::transport::TBufferedTransport(socket));
         std::shared_ptr<apache::thrift::protocol::TProtocol> protocol(
@@ -155,7 +157,8 @@ public:
   write_endpointIf *handler;
 };
 
-int main() {
+int main(int argc, char** argv) {
+  lb_ip = std::string(argv[1]);
   apache::thrift::server::TThreadedServer server(
       std::make_shared<write_endpointProcessorFactory>(
           std::make_shared<write_endpointCloneFactory>()),

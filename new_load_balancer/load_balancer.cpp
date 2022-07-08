@@ -18,6 +18,8 @@ using std::chrono::duration_cast;
 using std::chrono::microseconds;
 using std::chrono::system_clock;
 
+std::string worker_ip;
+
 // Has the same interface as all the workers
 // Forwards all requests to the workers via round robin
 class LoadBalancerHandler : public workerIf {
@@ -26,7 +28,7 @@ public:
     for (auto i = 0; i < num_workers; i++) {
       int worker_port = WORKER_PORT_BASE + i;
       std::shared_ptr<apache::thrift::transport::TTransport> socket(
-          new apache::thrift::transport::TSocket("worker_con", worker_port));
+          new apache::thrift::transport::TSocket(worker_ip, worker_port));
       std::shared_ptr<apache::thrift::transport::TTransport> transport(
           new apache::thrift::transport::TBufferedTransport(socket));
       std::shared_ptr<apache::thrift::protocol::TProtocol> protocol(
@@ -252,6 +254,8 @@ public:
 };
 
 int main(int argc, char *argv[]) {
+  worker_ip = argv[1];
+
   apache::thrift::server::TThreadedServer server(
       std::make_shared<workerProcessorFactory>(
           std::make_shared<LoadBalancerCloneFactory>()),

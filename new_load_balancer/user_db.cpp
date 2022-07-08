@@ -22,11 +22,13 @@ using std::chrono::duration_cast;
 using std::chrono::microseconds;
 using std::chrono::system_clock;
 
+std::string tweet_db_ip;
+
 class UserDbHandler : public user_dbIf {
 public:
   UserDbHandler() {
     std::shared_ptr<apache::thrift::transport::TTransport> socket(
-        new apache::thrift::transport::TSocket("db_con", TWEETDB_PORT));
+        new apache::thrift::transport::TSocket(tweet_db_ip, TWEETDB_PORT));
     std::shared_ptr<apache::thrift::transport::TTransport> transport(
         new apache::thrift::transport::TBufferedTransport(socket));
     std::shared_ptr<apache::thrift::protocol::TProtocol> protocol(
@@ -272,7 +274,8 @@ public:
   user_dbIf *handler;
 };
 
-int main() {
+int main(int argc, char** argv) {
+  tweet_db_ip = argv[1];
   apache::thrift::server::TThreadedServer server(
       std::make_shared<user_dbProcessorFactory>(
           std::make_shared<UserDbCloneFactory>()),

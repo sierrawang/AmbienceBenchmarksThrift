@@ -1,0 +1,22 @@
+all: load_balancer tweet_db user_db worker write_endpoint read_endpoint
+
+load_balancer: load_balancer.cpp
+	g++ ../gen-cpp/worker.cpp ../gen-cpp/load_balancer_types.cpp load_balancer.cpp -o load_balancer -lthrift
+
+tweet_db: tweet_db.cpp
+	g++ ../gen-cpp/tweet_db.cpp ../gen-cpp/load_balancer_types.cpp tweet_db.cpp -o tweet_db -lthrift
+
+user_db: user_db.cpp
+	g++ ../gen-cpp/tweet_db.cpp ../gen-cpp/user_db.cpp ../gen-cpp/load_balancer_types.cpp user_db.cpp -o user_db -lthrift
+
+worker: worker.cpp
+	g++ ../gen-cpp/tweet_db.cpp ../gen-cpp/user_db.cpp ../gen-cpp/read_endpoint.cpp ../gen-cpp/worker.cpp ../gen-cpp/load_balancer_types.cpp worker.cpp -o worker -lthrift
+
+write_endpoint: write_endpoint.cpp
+	g++ ../gen-cpp/write_endpoint.cpp ../gen-cpp/worker.cpp ../gen-cpp/load_balancer_types.cpp write_endpoint.cpp -o write_endpoint -lthrift
+
+read_endpoint: read_endpoint.cpp
+	g++ ../gen-cpp/read_endpoint.cpp ../gen-cpp/load_balancer_types.cpp read_endpoint.cpp -o read_endpoint -lthrift
+
+clean:
+	rm load_balancer tweet_db user_db worker write_endpoint read_endpoint

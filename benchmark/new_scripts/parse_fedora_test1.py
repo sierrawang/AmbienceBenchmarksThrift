@@ -20,10 +20,10 @@ def parse_section(method_name, line, it):
 
 def parse(method_name, results):
     print("Results for " + method_name + ":")
-    print("\tMean: " + str(statistics.mean(results)))
-    print("\tStandard Deviation: " + str(statistics.stdev(results)))
-    print("\tVariance: " + str(statistics.variance(results)))
-    print("\tCoefficient of Variation: " + str(statistics.stdev(results)/statistics.mean(results)))
+    print("Mean: " + str(statistics.mean(results)))
+    print("Standard Deviation: " + str(statistics.stdev(results)))
+    print("Variance: " + str(statistics.variance(results)))
+    print("Coefficient of Variation: " + str(statistics.stdev(results)/statistics.mean(results)))
     print()
 
 def main():

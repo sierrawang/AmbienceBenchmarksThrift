@@ -15,7 +15,7 @@ from thrift.protocol import TBinaryProtocol
 
 
 # Make socket
-transport = TSocket.TSocket('10.0.1.10', 9121)
+transport = TSocket.TSocket(sys.argv[1], 9121)
 
 # Buffering is critical. Raw sockets are very slow
 transport = TTransport.TBufferedTransport(transport)

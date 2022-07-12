@@ -10,4 +10,4 @@ docker run --net mynet --name server_con -v $HOME/AmbienceBenchmarksThrift:/root
 
 sleep 3
 
-docker run -p 9121:9121 --net mynet --name edpt_con -v $HOME/AmbienceBenchmarksThrift:/root/app thrift_img /bin/bash benchmark/new_scripts/run_wedpt.sh fedora_test2
+docker run -p 9121:9121 --net mynet --name edpt_con -v $HOME/AmbienceBenchmarksThrift:/root/app thrift_img /bin/bash benchmark/new_scripts/run_wedpt.sh fedora_test2 server_con

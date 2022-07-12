@@ -1,0 +1,30 @@
+Results for create_user():
+Mean: 57.3005300530053
+Standard Deviation: 7.78054613113319
+Variance: 60.536898098691644
+Coefficient of Variation: 0.13578488931840368
+
+Results for follow():
+Mean: 59.53305330533053
+Standard Deviation: 4.863271827775309
+Variance: 23.651412870832992
+Coefficient of Variation: 0.08169028057124454
+
+Results for post_tweet():
+Mean: 968.7997799779978
+Standard Deviation: 361.43435679913796
+Variance: 130634.79427480655
+Coefficient of Variation: 0.3730743588807859
+
+Results for unfollow():
+Mean: 58.94179417941794
+Standard Deviation: 6.534060851529041
+Variance: 42.69395121148442
+Coefficient of Variation: 0.1108561580538159
+
+Results for delete_user():
+Mean: 58.31723172317232
+Standard Deviation: 11.025737502539442
+Variance: 121.56688747490472
+Coefficient of Variation: 0.18906483001247076
+

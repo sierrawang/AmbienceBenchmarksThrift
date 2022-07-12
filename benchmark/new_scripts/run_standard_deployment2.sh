@@ -16,6 +16,6 @@ sleep 2
 docker run --net mynet --name worker_con -v $HOME/AmbienceBenchmarksThrift:/root/app thrift_img /bin/bash benchmark/new_scripts/run_worker.sh $1 &
 sleep 2
 
-docker run -p 9121:9121 --net mynet --name write_edpt -v $HOME/AmbienceBenchmarksThrift:/root/app thrift_img /bin/bash benchmark/new_scripts/run_wedpt.sh $1
+docker run -p 9121:9121 --net mynet --name write_edpt -v $HOME/AmbienceBenchmarksThrift:/root/app thrift_img /bin/bash benchmark/new_scripts/run_wedpt.sh $1 worker_con
 
 echo DONE!

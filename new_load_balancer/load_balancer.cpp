@@ -26,9 +26,12 @@ class LoadBalancerHandler : public workerIf {
 public:
   LoadBalancerHandler() {
     for (auto i = 0; i < num_workers; i++) {
+      // This ip specification was just added for the separated tests
+      std::string ip = worker_ip + std::to_string(i);
+
       int worker_port = WORKER_PORT_BASE + i;
       std::shared_ptr<apache::thrift::transport::TTransport> socket(
-          new apache::thrift::transport::TSocket(worker_ip, worker_port));
+          new apache::thrift::transport::TSocket(ip, worker_port));
       std::shared_ptr<apache::thrift::transport::TTransport> transport(
           new apache::thrift::transport::TBufferedTransport(socket));
       std::shared_ptr<apache::thrift::protocol::TProtocol> protocol(

@@ -42,7 +42,7 @@ class agentHandler : public agentIf {
         std::shared_ptr<TProtocol> protocol(new TBinaryProtocol(transport));
         pollClient client(protocol);
 
-	    auto num_iterations = 100000;
+	    auto num_iterations = 10000;
         cout << "Poll bench agent, size: " << param << endl;
         
         auto i = 0;

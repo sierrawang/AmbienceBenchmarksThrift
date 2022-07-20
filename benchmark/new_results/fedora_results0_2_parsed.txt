@@ -1,0 +1,84 @@
+9999
+Call times for 0:
+Mean: 16.629062906290628
+Standard Deviation: 3.3815390568825077
+Variance: 11.43480639322184
+Coefficient of Variation: 0.20335114948680008
+
+9999
+Return times for 0:
+Mean: 16.346234623462347
+Standard Deviation: 3.4237812472415827
+Variance: 11.722278028963128
+Coefficient of Variation: 0.20945381772064525
+
+9999
+Call times for 512:
+Mean: 180.4894489448945
+Standard Deviation: 13.967851798438486
+Variance: 195.10088386314126
+Coefficient of Variation: 0.07738874421796829
+
+9999
+Return times for 512:
+Mean: 17.137413741374136
+Standard Deviation: 3.196867739617032
+Variance: 10.219963344604114
+Coefficient of Variation: 0.18654318486219243
+
+9999
+Call times for 1024:
+Mean: 337.8798879887989
+Standard Deviation: 40.53465290544237
+Variance: 1643.0580861646877
+Coefficient of Variation: 0.11996764041423544
+
+9999
+Return times for 1024:
+Mean: 17.115411541154117
+Standard Deviation: 2.442309252131561
+Variance: 5.964874483047424
+Coefficient of Variation: 0.14269649586041286
+
+9999
+Call times for 2048:
+Mean: 651.3186318631863
+Standard Deviation: 36.22286436864157
+Variance: 1312.0959030690026
+Coefficient of Variation: 0.05561466016260136
+
+9999
+Return times for 2048:
+Mean: 17.274527452745275
+Standard Deviation: 2.740482487277384
+Variance: 7.510244263074037
+Coefficient of Variation: 0.1586429784996443
+
+9999
+Call times for 4096:
+Mean: 1281.1006100610061
+Standard Deviation: 144.35534133360696
+Variance: 20838.464571542172
+Coefficient of Variation: 0.11268072171687807
+
+9999
+Return times for 4096:
+Mean: 17.388138813881387
+Standard Deviation: 2.3959573136060577
+Variance: 5.740611448622357
+Coefficient of Variation: 0.13779262629841124
+
+9999
+Call times for 8192:
+Mean: 2540.5792579257927
+Standard Deviation: 91.46823700873259
+Variance: 8366.438381485677
+Coefficient of Variation: 0.03600290631492051
+
+9999
+Return times for 8192:
+Mean: 17.465546554655464
+Standard Deviation: 2.768992875237584
+Variance: 7.667321543116504
+Coefficient of Variation: 0.1585402934040736
+

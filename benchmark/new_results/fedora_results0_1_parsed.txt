@@ -1,0 +1,84 @@
+9999
+Call times for 0:
+Mean: 12.664666466646665
+Standard Deviation: 3.2753943744117615
+Variance: 10.728208307928213
+Coefficient of Variation: 0.25862460594898057
+
+9999
+Return times for 0:
+Mean: 12.197119711971197
+Standard Deviation: 1.8063499895721877
+Variance: 3.2629002848274427
+Coefficient of Variation: 0.14809643852222718
+
+9999
+Call times for 512:
+Mean: 138.6918691869187
+Standard Deviation: 13.115958621869916
+Variance: 172.02837057060378
+Coefficient of Variation: 0.09456905223617106
+
+9999
+Return times for 512:
+Mean: 13.117711771177119
+Standard Deviation: 3.02662806106341
+Variance: 9.160477420016457
+Coefficient of Variation: 0.2307283552085407
+
+9999
+Call times for 1024:
+Mean: 264.65306530653066
+Standard Deviation: 20.768929150017417
+Variance: 431.3484180384432
+Coefficient of Variation: 0.07847605742243
+
+9999
+Return times for 1024:
+Mean: 12.955895589558956
+Standard Deviation: 3.833678966004121
+Variance: 14.697094414382427
+Coefficient of Variation: 0.2959022739496025
+
+9999
+Call times for 2048:
+Mean: 512.2518251825182
+Standard Deviation: 36.47401898929275
+Variance: 1330.3540612312881
+Coefficient of Variation: 0.07120329727726563
+
+9999
+Return times for 2048:
+Mean: 13.073507350735074
+Standard Deviation: 1.8977928056633626
+Variance: 3.6016175332276177
+Coefficient of Variation: 0.1451632492145772
+
+9999
+Call times for 4096:
+Mean: 1005.7396739673967
+Standard Deviation: 57.07997338652213
+Variance: 3258.1233618060746
+Coefficient of Variation: 0.056754222652225315
+
+9999
+Return times for 4096:
+Mean: 13.247324732473247
+Standard Deviation: 2.022660333477742
+Variance: 4.091154824624291
+Coefficient of Variation: 0.15268443812806842
+
+9999
+Call times for 8192:
+Mean: 1997.117611761176
+Standard Deviation: 103.3491779327381
+Variance: 10681.052579372761
+Coefficient of Variation: 0.051749169565230915
+
+9999
+Return times for 8192:
+Mean: 13.28962896289629
+Standard Deviation: 1.762482544960231
+Variance: 3.1063447212894926
+Coefficient of Variation: 0.1326208993404525
+
